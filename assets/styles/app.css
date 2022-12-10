@@ -3,9 +3,9 @@
 @import "tailwindcss/utilities";
 
 body {
-    background-color: lightgray;
+    background-color: rgb(245, 245, 245);
 }
 
 a {
-    text-decoration: none;
+    text-decoration: none !important;
 }

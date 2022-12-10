@@ -7,7 +7,10 @@
         "@symfony/webpack-encore": "^4.0.0",
         "autoprefixer": "^10.4.13",
         "core-js": "^3.23.0",
+        "glob-all": "^3.3.1",
+        "path": "^0.12.7",
         "postcss-loader": "^7.0.2",
+        "purgecss-webpack-plugin": "^5.0.0",
         "regenerator-runtime": "^0.13.9",
         "tailwindcss": "^3.2.4",
         "webpack": "^5.74.0",
@@ -17,9 +20,10 @@
     "license": "UNLICENSED",
     "private": true,
     "scripts": {
-        "dev-server": "encore dev-server",
-        "dev": "encore dev",
-        "watch": "encore dev --watch",
-        "build": "encore production --progress"
+        "dev": "NODE_OPTIONS=--max_old_space_size=8046 NODE_ENV=dev encore dev",
+        "watch": "npm run start",
+        "start": "NODE_OPTIONS=--max_old_space_size=8046 NODE_ENV=dev encore dev --watch",
+        "build": "NODE_OPTIONS=--max_old_space_size=3800 NODE_ENV=production encore production --progress",
+        "postinstall": "npm run dev"
     }
 }

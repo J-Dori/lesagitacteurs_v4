@@ -1,1 +1,39 @@
-{% extends "page.html.twig" %}
+{% set layout = app.request.attributes.get('_easy_page_layout') -%}
+{% extends layout.resource %}
+
+{% block stylesheets %}
+	{{ parent() }}
+	{% if page.css %}
+		<style type="text/css" id="easy_page_css">
+			{{- page.css | raw -}}</style>
+	{% endif %}
+{% endblock %}
+
+{% block easy_page_head_metas %}
+	{{- seo_metas(page.seo) -}}
+{% endblock %}
+
+{% block title %}
+	{{- seo_title(page.name) -}}
+{% endblock %}
+
+{% block easy_page_breadcrumbs %}
+	{{ seo_breadcrumb() }}
+{% endblock %}
+
+{% block easy_page_page_content %}
+	{# {% if page.content is defined and page.content is not empty %}
+        {% for block in page.content %}
+            {{ easy_editor_block(block) }}
+        {% endfor %}
+    {% endif %} #}
+{% endblock %}
+
+{% block javascripts %}
+	{{ parent() }}
+	{% if page.js %}
+		<script type="text/javascript" id="easy_page_js">
+			{{- page.js | raw -}}
+        </script>
+	{% endif %}
+{% endblock %}
