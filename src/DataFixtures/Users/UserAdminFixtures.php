@@ -45,7 +45,7 @@ class UserAdminFixtures extends Fixture implements FixtureGroupInterface
         return [
             [
                 'email' => 'info@lesagitacteurs.fr', 
-                'roles' => ["ROLE_ADMIN"], 
+                'roles' => ["ROLE_ADMINISTRATOR"], 
                 'password' => '$2y$13$9m/XwZxMQTlgTMS/poEgyuOjzocoG7ke5vQScKBA.DgW4g3Kjmge2', 
                 'firstname' => 'Joel',
                 'lastname' => 'Gomes',
@@ -59,21 +59,21 @@ class UserAdminFixtures extends Fixture implements FixtureGroupInterface
             ],
             [
                 'email' => 'pfscheidecker@gmail.com', 
-                'roles' => ["ROLE_ADMIN"], 
+                'roles' => ["ROLE_ADMINISTRATOR"], 
                 'password' => '$2y$10$dnkWTG1Y88.PraXlBEYLUuzipSwrdR.WJb86vNb2IFxC9tZKvwSvK', 
                 'firstname' => 'Pierre',
                 'lastname' => 'SCHEIDECKER',
             ],
             [
                 'email' => 'oportmann@estvideo.fr', 
-                'roles' => ["ROLE_ADMIN"], 
+                'roles' => ["ROLE_ADMINISTRATOR"], 
                 'password' => '$2y$10$60KhIIww88PzGHtRap0smO8RWOFTfaVopptvJFaAavQObh1Fb/lYa', 
                 'firstname' => 'Odile',
                 'lastname' => 'PORTMANN',
             ],
             [
                 'email' => 'maya_124@hotmail.fr', 
-                'roles' => ["ROLE_ADMIN"], 
+                'roles' => ["ROLE_ADMINISTRATOR"], 
                 'password' => '$2y$10$O/G3qfx.pTPH6Tj2EP0pqesmALvCwY9RMDMR/IPc.BeJkV7wYWi.e', 
                 'firstname' => 'Laetitia',
                 'lastname' => 'SCHUBNEL',

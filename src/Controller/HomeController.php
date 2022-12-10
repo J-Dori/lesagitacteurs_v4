@@ -11,13 +11,15 @@ class HomeController extends AbstractController
     #[Route('/', name: 'app_home')]
     public function index(): Response
     {
-        return $this->render('base.html.twig');
+        return $this->render('home/index.html.twig');
     }
 
     #[Route('/confidentialite', name: 'app_policy')]
     public function policy(): Response
     {
-        return $this->render('base.html.twig');
+        $params = ['slugs' => ''];
+
+        return $this->redirect($this->generateUrl('easy_page_index', $params));
     }
 
 }

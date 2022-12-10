@@ -12,4 +12,5 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\HasLifecycleCallbacks]
 class User extends BaseUser
 {
+    public const EDITOR = 'ROLE_EDITOR';
 }

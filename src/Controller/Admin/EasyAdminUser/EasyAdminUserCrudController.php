@@ -54,6 +54,7 @@ class EasyAdminUserCrudController extends BaseEasyAdminUserCrudController
         return $queryBuilder
             ->andWhere('entity.roles NOT LIKE :role')
             ->setParameter('role', '%'.User::SUPER_ADMIN.'%')
+            ->addOrderBy('entity.firstname', Criteria::ASC)
             ->addOrderBy('entity.lastname', Criteria::ASC)
         ;
     }
