@@ -79,7 +79,17 @@
         ],
         "post-update-cmd": [
             "@auto-scripts"
-        ]
+        ],
+        "reset-site": [
+            "bin/console doctrine:database:drop --force",
+            "bin/console doctrine:database:create",
+            "bin/console doctrine:migrations:sync-metadata-storage",
+            "bin/console doctrine:migrations:migrate -n",
+            "rm -rf ./public/liip_cache/ ./public/upload/",
+            "mkdir -p public/upload/media",
+            "chmod -R 777 public/upload",
+            "bin/console doctrine:fixtures:load -q"
+          ]
     },
     "conflict": {
         "symfony/symfony": "*"
