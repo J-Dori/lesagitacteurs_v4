@@ -1,0 +1,33 @@
+<footer class="bg-gray-800 py-10 pt-4 pb-2 font-serif">
+    <div class="flex flex-wrap lg:justify-around sm:justify-center lg:flex-row flex-col">
+        <div id="footer__subscribe" class="my-4 flex-1 text-center">
+            <h4 class="mb-3">NEWSLETTER</h4>
+            <form action="{{ path('app_home') }}" method="post">
+                <input type="mail" placeholder="E-mail" class="p-2 w-80 row mx-auto">
+                <button type="submit" class="btn btn-md">Souscrire</button>
+            </form>
+        </div>
+        <div id="footer__site_map_links" class="my-4 mx-0 flex-1">
+            <div class="flex flex-wrap text-center lg:items-start items-center justify-center lg:flex-row flex-col-reverse">
+                <div class="flex-1 mr-2">
+                    {# {{ easy_menu('footer-links-col-1', { 'template': 'components/menus/links_uppercase_block.html.twig' }) }} #}
+                </div>
+                <div class="flex-1">
+                    {# {{ easy_menu('footer-links-col-2', { 'template': 'components/menus/links_uppercase_block.html.twig' }) }} #}
+                </div>
+            </div>
+        </div>
+        <div id="footer__social" class="my-4 flex-1 text-center text-white">
+            <h4>TROUVEZ NOUS SUR</h4>
+            <div class="col">
+                {# {{ easy_menu('footer-links-media', { 'template': 'components/menus/links_inline_icon_only.html.twig' }) }} #}
+            </div>
+            <h5 class="mt-6">CONTACT</h5>
+            <p><a href="mailto:info@smcs.com">info@smcs.com</a></p>
+        </div>
+    </div>
+    <div class="flex flex-wrap justify-content-center text-sm">
+        <small class="mx-4"><a class="text-gray-600" href="{{ path('app_policy') }}">POLITIQUE DE CONFIDENTIALITÉ</a></small>
+        <small class="mx-4"><a class="text-gray-600" href="{{ path('app_home') }}">COOKIES</a></small>
+    </div>
+</footer>
