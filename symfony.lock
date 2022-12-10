@@ -1,4 +1,66 @@
 {
+    "agence-adeliom/easy-admin-user-bundle": {
+        "version": "2.0.16"
+    },
+    "agence-adeliom/easy-common-bundle": {
+        "version": "2.0.16"
+    },
+    "agence-adeliom/easy-fields-bundle": {
+        "version": "2.0",
+        "recipe": {
+            "repo": "github.com/agence-adeliom/symfony-recipes",
+            "branch": "main",
+            "version": "1.0",
+            "ref": "e56e700e4974e09d72d6e2fc76d86387bff588ca"
+        },
+        "files": [
+            "config/routes/easy_fields.yaml"
+        ]
+    },
+    "agence-adeliom/easy-media-bundle": {
+        "version": "2.0",
+        "recipe": {
+            "repo": "github.com/agence-adeliom/symfony-recipes",
+            "branch": "main",
+            "version": "2.0",
+            "ref": "0c67ba3d33d4222c8ddc76cfed312275201cbb3f"
+        },
+        "files": [
+            "config/packages/easy_media.yaml",
+            "config/routes/easy_media.yaml",
+            "src/Entity/EasyMedia/Folder.php",
+            "src/Entity/EasyMedia/Media.php"
+        ]
+    },
+    "agence-adeliom/easy-page-bundle": {
+        "version": "2.0",
+        "recipe": {
+            "repo": "github.com/agence-adeliom/symfony-recipes",
+            "branch": "main",
+            "version": "2.0",
+            "ref": "8e6252fca1e3e2cc63f12b23afec966238a5ae22"
+        },
+        "files": [
+            "config/packages/easy_page.yaml",
+            "config/routes/easy_page.yaml",
+            "src/Controller/Admin/EasyPage/PageCrudController.php",
+            "src/Controller/EasyPage/PageController.php",
+            "src/Entity/EasyPage/Page.php",
+            "src/Repository/EasyPage/PageRepository.php"
+        ]
+    },
+    "agence-adeliom/easy-seo-bundle": {
+        "version": "2.0",
+        "recipe": {
+            "repo": "github.com/agence-adeliom/symfony-recipes",
+            "branch": "main",
+            "version": "1.0",
+            "ref": "f7a991a0caaf8eb384c8adfa87155f0349cf41d3"
+        },
+        "files": [
+            "config/packages/easy_seo.yaml"
+        ]
+    },
     "doctrine/annotations": {
         "version": "1.13",
         "recipe": {
@@ -22,6 +84,18 @@
             "./src/Repository/.gitignore"
         ]
     },
+    "doctrine/doctrine-fixtures-bundle": {
+        "version": "3.4",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "main",
+            "version": "3.0",
+            "ref": "1f5514cfa15b947298df4d771e694e578d4c204d"
+        },
+        "files": [
+            "./src/DataFixtures/AppFixtures.php"
+        ]
+    },
     "doctrine/doctrine-migrations-bundle": {
         "version": "3.2",
         "recipe": {
@@ -33,6 +107,53 @@
         "files": [
             "./config/packages/doctrine_migrations.yaml",
             "./migrations/.gitignore"
+        ]
+    },
+    "easycorp/easyadmin-bundle": {
+        "version": "4.4",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "main",
+            "version": "3.0",
+            "ref": "b131e6cbfe1b898a508987851963fff485986285"
+        }
+    },
+    "league/flysystem-bundle": {
+        "version": "2.4",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "main",
+            "version": "1.0",
+            "ref": "913dc3d7a5a1af0d2b044c5ac3a16e2f851d7380"
+        },
+        "files": [
+            "config/packages/flysystem.yaml",
+            "var/storage/.gitignore"
+        ]
+    },
+    "liip/imagine-bundle": {
+        "version": "2.10",
+        "recipe": {
+            "repo": "github.com/symfony/recipes-contrib",
+            "branch": "main",
+            "version": "1.8",
+            "ref": "d1227d002b70d1a1f941d91845fcd7ac7fbfc929"
+        },
+        "files": [
+            "config/packages/liip_imagine.yaml",
+            "config/routes/liip_imagine.yaml"
+        ]
+    },
+    "nyholm/psr7": {
+        "version": "1.5",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "main",
+            "version": "1.0",
+            "ref": "0cd4d2d0e7f646fda75f9944f747a56e6ed13d4c"
+        },
+        "files": [
+            "config/packages/nyholm_psr7.yaml"
         ]
     },
     "phpunit/phpunit": {
@@ -49,6 +170,9 @@
             "./tests/bootstrap.php"
         ]
     },
+    "presta/sitemap-bundle": {
+        "version": "v3.3.0"
+    },
     "sensio/framework-extra-bundle": {
         "version": "6.2",
         "recipe": {
@@ -59,6 +183,18 @@
         },
         "files": [
             "./config/packages/sensio_framework_extra.yaml"
+        ]
+    },
+    "stof/doctrine-extensions-bundle": {
+        "version": "1.7",
+        "recipe": {
+            "repo": "github.com/symfony/recipes-contrib",
+            "branch": "main",
+            "version": "1.2",
+            "ref": "e805aba9eff5372e2d149a9ff56566769e22819d"
+        },
+        "files": [
+            "config/packages/stof_doctrine_extensions.yaml"
         ]
     },
     "symfony/console": {
@@ -239,6 +375,18 @@
             "./templates/base.html.twig"
         ]
     },
+    "symfony/uid": {
+        "version": "6.2",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "main",
+            "version": "6.2",
+            "ref": "d294ad4add3e15d7eb1bae0221588ca89b38e558"
+        },
+        "files": [
+            "config/packages/uid.yaml"
+        ]
+    },
     "symfony/validator": {
         "version": "6.2",
         "recipe": {
@@ -274,6 +422,37 @@
         },
         "files": [
             "./config/packages/messenger.yaml"
+        ]
+    },
+    "symfony/webpack-encore-bundle": {
+        "version": "1.16",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "main",
+            "version": "1.10",
+            "ref": "5878c7c28468ca0fdce2497a04cfc66bab0dc3ef"
+        },
+        "files": [
+            "assets/app.js",
+            "assets/bootstrap.js",
+            "assets/controllers.json",
+            "assets/controllers/hello_controller.js",
+            "assets/styles/app.css",
+            "config/packages/webpack_encore.yaml",
+            "package.json",
+            "webpack.config.js"
+        ]
+    },
+    "symfonycasts/reset-password-bundle": {
+        "version": "1.16",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "main",
+            "version": "1.0",
+            "ref": "97c1627c0384534997ae1047b93be517ca16de43"
+        },
+        "files": [
+            "config/packages/reset_password.yaml"
         ]
     },
     "twig/extra-bundle": {

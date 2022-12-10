@@ -1,0 +1,136 @@
+easy_admin_user:
+    login:
+        username: E-mail
+        password: Mot de passe
+        forgot_password: J'ai oublié mon mot de passe
+        login: Connecter
+
+easy:
+    page:
+        admin:
+            crud:   
+                label:
+                    page:
+                        detail: Consulter
+    enum:
+        playStatus:
+            upfront: Mise en évidence
+            closed: Clôturée
+        state:
+            enabled: Actif
+            disabled: Inactif
+            pending: En attente
+
+site:
+    play:
+        crud:
+            title:
+                page:
+                    edit: Éditer la pièce
+                    index: Liste des pièces
+                    new: Nouvelle pièce
+                    detail: Détails de la pièce
+            label:
+                page:
+                    singular: une pièce
+                    plural: des pièces
+                    new: Nouvelle pièce
+                    edit: Éditer la pièce
+                    delete: Supprimer la pièce
+        field:
+            name: Titre
+            description: Description
+            year: Année
+            dateStart: Date Début
+            dateEnd: Date Fin
+            playStatus: État de la pièce
+            firstname: Prénom
+            lastname: Nom
+            email: E-mail
+            state: État de publication
+            image: Flyer de la pièce
+    team:
+        crud:
+            title:
+                page:
+                    edit: Éditer le membre
+                    index: Liste des membres
+                    new: Nouveau membre
+                    detail: Détails du membre
+            label:
+                page:
+                    singular: un membre
+                    plural: des membres
+                    new: Nouveau membre
+                    edit: Éditer le membre
+                    delete: Supprimer le membre
+        field:
+            firstname: Prénom
+            lastname: Nom
+            role: Rôle
+            roleOrder: Ordre
+            description: Description
+            image: Photo
+            email: E-mail
+            phone: Nº Portable
+            state: État de publication
+    
+    actor:
+        crud:
+            title:  
+                page:
+                    edit: Éditer l'acteur
+                    index: Liste des Acteurs
+                    new: Nouveau acteur
+                    detail: Détails de l'acteur
+            label:
+                page:
+                    singular: un acteur
+                    plural: des acteurs
+                    new: Nouveau acteur
+                    edit: Éditer l'acteur
+                    delete: Supprimer l'acteur
+        field:
+            fullname: Nom
+            firstname: Prénom
+            lastname: Nom
+            phone: Nº Portable
+            email: E-mail
+            respFullname: Nom du Responsable
+            respFirstname: Prénom
+            respLastname: Nom
+            respPhone: Nº Portable
+            respEmail: E-mail
+            state: État de publication
+
+    play_roles:
+        crud:
+            title:
+                page:
+                    edit: Éditer le rôle
+                    index: Liste des rôles
+                    new: Nouveau rôle
+                    detail: Détails du rôle
+            label:
+                page:
+                    singular: un rôle
+                    plural: des rôles
+                    new: Nouveau rôle
+                    edit: Éditer le rôle
+                    delete: Supprimer le rôle
+        field: 
+            play: Pièce
+            actor: Acteurs
+            name: Rôle
+            state: État de publication
+
+
+Jan: Jan
+Feb: Fév
+Mar: Mars
+Apr: Avr
+May: Mai
+Jun: Juin
+Jul: Juillet
+Ago: Août
+Dec: Déc
