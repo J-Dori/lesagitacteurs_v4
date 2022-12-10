@@ -48,7 +48,7 @@ tooling:
             -   node: npm install
     reset-site:
         cmd:
-            -   appserver: composer install
-            -   node: npm install
+            #-   appserver: composer install
+            #-   node: npm install
             -   appserver: composer run-script reset-site
        
