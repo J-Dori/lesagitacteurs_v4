@@ -90,9 +90,6 @@
             "bin/console doctrine:database:create",
             "bin/console doctrine:migrations:sync-metadata-storage",
             "bin/console doctrine:migrations:migrate -n",
-            
-            
-            
             "bin/console doctrine:fixtures:load -q"
           ]
     },

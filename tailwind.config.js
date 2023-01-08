@@ -1,7 +1,8 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-    content: ['./templates/**/*.html.twig', './assets/**/*.{js,ts,jsx,tsx}'],
+    content: ['./templates/**/*.html.twig', './build/**/*.{css,js}'],
     darkMode: 'class',
+    important: true,
     theme: {
         fontFamily: {
             serif: ['Mulish', 'serif'],
