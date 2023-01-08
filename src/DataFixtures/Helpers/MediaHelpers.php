@@ -28,7 +28,7 @@ trait MediaHelpers
         }
 
         try {
-            return $manager->createMedia($projectDir . '/var/fixtures_medias/' . $folderPath . '/' . $fileName, $folderPath, $fileName);
+            return $manager->createMedia($projectDir . '/var/storage/medias/' . $folderPath . '/' . $fileName, $folderPath, $fileName);
         } catch (AlreadyExist $exception) {
             $ext = pathinfo($fileName, PATHINFO_EXTENSION);
             if ($ext === 'jpg') $ext = 'jpeg';
