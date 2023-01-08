@@ -9,7 +9,7 @@
     {# <link rel="icon" href="logo/fav.ico"> #}
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     {% block easy_page_head_metas %}{% endblock %}
     {{ encore_entry_link_tags('app') }}
     
@@ -28,7 +28,7 @@
     {% block body %}
        
         {% block header %}
-            {% include 'navigations/header.html.twig' %}
+            {{ render(controller('App\\Controller\\NavigationController::topMenu', {})) }}
         {% endblock %}
 
         <div id="mainContent">
