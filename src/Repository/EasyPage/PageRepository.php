@@ -20,4 +20,15 @@ class PageRepository extends BasePageRepository
     {
         parent::__construct($registry, Page::class);
     }
+
+
+    public function getMainPages()
+    {
+        return $this->getPublishedQuery()
+            ->andWhere('page.parent IS NULL')
+            ->getQuery()
+            ->getResult();
+    }
+
+
 }
