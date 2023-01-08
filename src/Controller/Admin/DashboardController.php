@@ -12,6 +12,8 @@ use Symfony\Component\Routing\Annotation\Route;
 use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
 use Adeliom\EasyAdminUserBundle\Controller\Admin\EasyAdminUserTrait;
+use App\Entity\Site\Contact;
+use App\Entity\Site\ContactSocial;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractDashboardController;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 
@@ -53,6 +55,11 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::section('L\'équipe');
         yield MenuItem::linkToCrud('Acteurs', 'fa fa-users', Actor::class);
         yield MenuItem::linkToCrud('Membres', 'fa fa-people-roof', Team::class);
+
+        // Contacts
+        yield MenuItem::section('Contacts');
+        yield MenuItem::linkToCrud('Liste de Contacts', 'fa fa-contact', Contact::class);
+        yield MenuItem::linkToCrud('Réseaux sociaux', 'fa fa-social', ContactSocial::class);
 
         // Users
         yield MenuItem::section('Utilisateurs');
