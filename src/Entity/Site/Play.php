@@ -2,16 +2,18 @@
 
 namespace App\Entity\Site;
 
-use App\Entity\Site\PlayActorRole;
 use App\Trait\PlayStatusEnum;
 use App\Trait\ObjectStateEnum;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
+use App\Entity\EasyMedia\Media;
 use Doctrine\ORM\Mapping as ORM;
+use App\Entity\Site\PlayActorRole;
 use App\Repository\PlayRepository;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
 
 #[ORM\Entity(repositoryClass: PlayRepository::class)]
+#[ORM\HasLifecycleCallbacks]
 class Play
 {
     #[ORM\Id]
@@ -41,7 +43,7 @@ class Play
     private ?string $state = ObjectStateEnum::ENABLED;
 
     #[ORM\Column(type: 'easy_media_type', nullable: true)]
-    private $image = null;
+    private Media|int|null $image = null;
 
     #[ORM\OneToMany(mappedBy: 'play', targetEntity: PlayActorRole::class, orphanRemoval: true, cascade: ['persist'])]
     private Collection|null $playActorRoles;
@@ -140,12 +142,12 @@ class Play
         return $this;
     }
 
-    public function getImage()
+    public function getImage(): int|Media|null
     {
         return $this->image;
     }
 
-    public function setImage($image)
+    public function setImage(int|Media|null $image)
     {
         $this->image = $image;
 
