@@ -13,6 +13,7 @@ use App\Trait\PlayStatusEnum;
 use Doctrine\Persistence\ObjectManager;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Bundle\FixturesBundle\FixtureGroupInterface;
+use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpKernel\KernelInterface;
 
 class PlayFixtures extends Fixture implements FixtureGroupInterface
@@ -40,6 +41,11 @@ class PlayFixtures extends Fixture implements FixtureGroupInterface
 
     public function load(ObjectManager $manager): void
     {
+        $dir = new Filesystem();
+        $projectDir = $this->kernel->getProjectDir();
+        $dir->remove($projectDir . '/public/storage/medias/pieces');
+        sleep(1);
+
         $arrayData = $this->getData();
         foreach ($arrayData as $array) {
             $data = new Play();
@@ -77,6 +83,7 @@ class PlayFixtures extends Fixture implements FixtureGroupInterface
                 'date_end' => null,
                 'year' => '2010',
                 'playStatus' => PlayStatusEnum::CLOSED,
+                'image' => $this->createMedia('pieces/2010', '2010.png')?->getId(),
                 'ref' => self::PROCES,
             ],
             [
@@ -86,6 +93,7 @@ class PlayFixtures extends Fixture implements FixtureGroupInterface
                 'date_end' => null,
                 'year' => '2011',
                 'playStatus' => PlayStatusEnum::CLOSED,
+                'image' => $this->createMedia('pieces/2011', '2011.png')?->getId(),
                 'ref' => self::RICKY,
             ],
             [
@@ -95,6 +103,7 @@ class PlayFixtures extends Fixture implements FixtureGroupInterface
                 'date_end' => null,
                 'year' => '2013',
                 'playStatus' => PlayStatusEnum::CLOSED,
+                'image' => $this->createMedia('pieces/2013-Enfants', '2013enf.png')?->getId(),
                 'ref' => self::TELE_VIVANTE,
             ],
             [
@@ -104,6 +113,7 @@ class PlayFixtures extends Fixture implements FixtureGroupInterface
                 'date_end' => null,
                 'year' => '2013',
                 'playStatus' => PlayStatusEnum::CLOSED,
+                'image' => $this->createMedia('pieces/2013-Ados', '2013ado.png')?->getId(),
                 'ref' => self::PHILEAS_FOGG,
             ],
             [
@@ -113,6 +123,7 @@ class PlayFixtures extends Fixture implements FixtureGroupInterface
                 'date_end' => null,
                 'year' => '2014',
                 'playStatus' => PlayStatusEnum::CLOSED,
+                'image' => $this->createMedia('pieces/2014', '2014.png')?->getId(),
                 'ref' => self::TOUT_LE_MONDE,
             ],
             [
@@ -122,6 +133,7 @@ class PlayFixtures extends Fixture implements FixtureGroupInterface
                 'date_end' => null,
                 'year' => '2015',
                 'playStatus' => PlayStatusEnum::CLOSED,
+                'image' => $this->createMedia('pieces/2015', '2015.png')?->getId(),
                 'ref' => self::PINOCCHIOS,
             ],
             [
@@ -131,6 +143,7 @@ class PlayFixtures extends Fixture implements FixtureGroupInterface
                 'date_end' => null,
                 'year' => '2016',
                 'playStatus' => PlayStatusEnum::CLOSED,
+                'image' => $this->createMedia('pieces/2016', '2016.png')?->getId(),
                 'ref' => self::CHARLES_PERRAULT,
             ],
             [
@@ -140,6 +153,7 @@ class PlayFixtures extends Fixture implements FixtureGroupInterface
                 'date_end' => null,
                 'year' => '2017',
                 'playStatus' => PlayStatusEnum::CLOSED,
+                'image' => $this->createMedia('pieces/2017', '2017.png')?->getId(),
                 'ref' => self::CANTERVILLE,
             ],
             [
@@ -149,6 +163,7 @@ class PlayFixtures extends Fixture implements FixtureGroupInterface
                 'date_end' => null,
                 'year' => '2018',
                 'playStatus' => PlayStatusEnum::CLOSED,
+                'image' => $this->createMedia('pieces/2018', '2018.png')?->getId(),
                 'ref' => self::ULYSSE,
             ],
             [
@@ -158,6 +173,7 @@ class PlayFixtures extends Fixture implements FixtureGroupInterface
                 'date_end' => null,
                 'year' => '2019',
                 'playStatus' => PlayStatusEnum::CLOSED,
+                'image' => $this->createMedia('pieces/2019', '2019.png')?->getId(),
                 'ref' => self::ALICE,
             ],
             [
@@ -167,6 +183,7 @@ class PlayFixtures extends Fixture implements FixtureGroupInterface
                 'date_end' => null,
                 'year' => '2021',
                 'playStatus' => PlayStatusEnum::CLOSED,
+                'image' => $this->createMedia('pieces/2021', '2021.png')?->getId(),
                 'ref' => self::CABARETTO,
             ],
             [
@@ -176,6 +193,7 @@ class PlayFixtures extends Fixture implements FixtureGroupInterface
                 'date_end' => '2022-11-20',
                 'year' => '2022',
                 'playStatus' => PlayStatusEnum::UPFRONT,
+                'image' => $this->createMedia('pieces/2022', '2022.png')?->getId(),
                 'ref' => self::PETER_PAN,
             ],
         ];
