@@ -24,6 +24,6 @@
         "watch": "npm run start",
         "start": "NODE_OPTIONS=--max_old_space_size=8046 NODE_ENV=dev encore dev --watch",
         "build": "NODE_OPTIONS=--max_old_space_size=3800 NODE_ENV=production encore production --progress",
-        "postinstall": "npm run dev"
+        "postinstall": "npm run build"
     }
 }

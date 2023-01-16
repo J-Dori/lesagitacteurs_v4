@@ -1,6 +1,9 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-    content: ['./templates/**/*.html.twig', './build/**/*.{css,js}'],
+    content: [
+        "./assets/**/*.js",
+        "./templates/**/*.html.twig",
+      ],
     darkMode: 'class',
     important: true,
     theme: {
@@ -10,5 +13,5 @@ module.exports = {
         },
         extend: {},
     },
-    plugins: [require("tailwindcss"), require("precss"), require("autoprefixer")],
+    plugins: [],
 }
