@@ -2,58 +2,58 @@
 
 <!DOCTYPE html>
 <html lang="{{ app.request.attributes.get('_locale') | default('fr') }}">
-<head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>{% block title %}Les Agit'acteurs{% endblock %}</title>
-    {# <link rel="icon" href="logo/fav.ico"> #}
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    {% block easy_page_head_metas %}{% endblock %}
-    {{ encore_entry_link_tags('app') }}
-    
-    {% block stylesheets %}
-        <link href="https://fonts.googleapis.com/css2?family=Red+Hat+Display:wght@400;600;700&display=swap" rel="stylesheet">
-        {% for asset_css in layout.assets_css %}
-            <link rel="stylesheet" href="{{ asset(asset_css) }}">
-        {% endfor %}
-        {% for asset_webpack in layout.assets_webpack %}
-            {{ encore_entry_link_tags(asset_webpack) }}
-        {% endfor %}
-    {% endblock %}
+	<head>
+		<meta charset="UTF-8"/>
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>
+			{% block title %}Les Agit'acteurs
+			{% endblock %}
+		</title>
+		{# <link rel="icon" href="logo/fav.ico"> #}
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w==" crossorigin="anonymous" referrerpolicy="no-referrer"/> {% block easy_page_head_metas %}{% endblock %}
 
-</head>
-<body>
-    {% block body %}
-       
-        {% block header %}
-            {{ render(controller('App\\Controller\\NavigationController::topMenu', {})) }}
-        {% endblock %}
+		{% block stylesheets %}
+		    {{ encore_entry_link_tags('app') }}
+			<link href="https://fonts.googleapis.com/css2?family=Red+Hat+Display:wght@400;600;700&display=swap" rel="stylesheet">
+			{% for asset_css in layout.assets_css %}
+				<link rel="stylesheet" href="{{ asset(asset_css) }}">
+			{% endfor %}
+			{% for asset_webpack in layout.assets_webpack %}
+				{{ encore_entry_link_tags(asset_webpack) }}
+			{% endfor %}
+		{% endblock %}
 
-        <div id="mainContent">
-        {% block container %}
-                {% block easy_page_page_content %}
-                    
-                {% endblock %}
-            {% endblock %}
-        </div>
+	</head>
+	<body>
+		{% block body %}
 
-        {% block footer %}
-            {% include 'navigations/footer.html.twig' %}
-        {% endblock %}
+			{% block header %}
+				{{ render(controller('App\\Controller\\NavigationController::topMenu', {})) }}
+			{% endblock %}
 
-        
-        {{ encore_entry_link_tags('app') }}
-        {% block javascripts %}
-            {% for asset_js in layout.assets_js %}
-                <script type="text/javascript" src="{{ asset(asset_js) }}"></script>
-            {% endfor %}
-            {% for asset_webpack in layout.assets_webpack %}
-                {{ encore_entry_script_tags(asset_webpack) }}
-            {% endfor %}
-        {% endblock %}
+			<div id="mainContent">
+				{% block container %}
+					{% block easy_page_page_content %}{% endblock %}
+				{% endblock %}
+			</div>
 
-    {% endblock %}
-</body>
+			{% block footer %}
+				{% include 'navigations/footer.html.twig' %}
+			{% endblock %}
+
+
+			{{ encore_entry_link_tags('app') }}
+			{% block javascripts %}
+				{% for asset_js in layout.assets_js %}
+					<script type="text/javascript" src="{{ asset(asset_js) }}"></script>
+				{% endfor %}
+				{% for asset_webpack in layout.assets_webpack %}
+					{{ encore_entry_script_tags(asset_webpack) }}
+				{% endfor %}
+			{% endblock %}
+
+		{% endblock %}
+	</body>
 </html>
