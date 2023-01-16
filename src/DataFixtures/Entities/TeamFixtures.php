@@ -2,7 +2,6 @@
 
 namespace App\DataFixtures\Entities;
 
-use Adeliom\EasyCommonBundle\Enum\ThreeStateStatusEnum;
 use App\Entity\Site\Team;
 use App\Trait\ObjectStateEnum;
 use Doctrine\Bundle\FixturesBundle\Fixture;
