@@ -3,8 +3,11 @@
 namespace App\Repository;
 
 use App\Entity\Site\Play;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use App\Trait\ObjectStateEnum;
+use App\Trait\PlayStatusEnum;
+use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 
 /**
  * @extends ServiceEntityRepository<Play>
@@ -21,47 +24,33 @@ class PlayRepository extends ServiceEntityRepository
         parent::__construct($registry, Play::class);
     }
 
-    public function save(Play $entity, bool $flush = false): void
+    public function getPublishedQuery(): QueryBuilder
     {
-        $this->getEntityManager()->persist($entity);
-
-        if ($flush) {
-            $this->getEntityManager()->flush();
-        }
+        $qb = $this->createQueryBuilder('p')
+            ->where('p.state = :state')
+            ->setParameter('state', ObjectStateEnum::ENABLED)
+        ;
+        return $qb;
     }
 
-    public function remove(Play $entity, bool $flush = false): void
+    public function getPlayStatusUpFront()
     {
-        $this->getEntityManager()->remove($entity);
-
-        if ($flush) {
-            $this->getEntityManager()->flush();
-        }
+        return $this->getPublishedQuery()
+            ->andWhere('p.playStatus = :upFront')
+            ->setParameter('upFront', PlayStatusEnum::UPFRONT)
+            ->getQuery()
+            ->getOneOrNullResult()
+        ;
     }
 
+    public function getLastPlay()
+    {
+        return $this->getPublishedQuery()
+                ->addOrderBy('p.id', 'DESC')
+                ->setMaxResults(1)
+                ->getQuery()
+                ->getResult()
+        ;
+    }
 
-//    /**
-//     * @return Play[] Returns an array of Play objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('p')
-//            ->andWhere('p.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('p.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
-
-//    public function findOneBySomeField($value): ?Play
-//    {
-//        return $this->createQueryBuilder('p')
-//            ->andWhere('p.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
 }

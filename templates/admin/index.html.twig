@@ -1,1 +1,73 @@
 {% extends '@EasyAdmin/page/content.html.twig' %}
+
+{% block main %}{{ block('page_content') }}
+    {% if playUpFront is defined %}
+        <div class="text-center">
+            {% if playUpFront == true %}
+                <h2>Piéce actuelment mise en évidence</h2>
+            {% else %}
+                <h2>Aucune piéce actuelment mise en évidence</h2>
+                {% if play is defined and play %}
+                    <h4>Dernière pièce enregistrée</h4>
+                {% endif %}
+            {% endif %}
+        </div>
+    {% endif %}
+
+    {% if play is defined and play %}
+        <div class="container mt-5">
+            <div class="row justify-content-md-center">
+                <div class="col col-lg-3">
+                    <img src="{{ play.image|resolve_media }}" alt="Flyer{{ play.name }}" style="width:250px">
+                    <p class="mt-3">
+                        <span><strong>{{ 'site.play.field.playStatus'|trans }} : </strong></span>
+                        {{ ('easy.enum.playStatus.' ~ play.playStatus)|trans }}
+                    </p>
+                    <br>
+                    <p><span><strong>{{ 'site.play.field.year'|trans }} : </strong></span>{{ play.year }}</p>
+                    <p><span><strong>{{ 'site.play.field.dateStart'|trans }} : </strong></span>{{ play.dateStart|date('d-m-Y') }}</p>
+                    <p><span><strong>{{ 'site.play.field.dateEnd'|trans }} : </strong></span>{{ play.dateEnd|date('d-m-Y') }}</p>
+                    <br>
+                    <p class="mt-1">
+                        <span><strong>{{ 'site.play.field.state'|trans }} : </strong></span>
+                        {{ ('easy.enum.state.' ~ play.state)|trans }}
+                    </p>
+                </div>
+
+                <div class="col-auto">
+                    <h2>{{ play.name }}</h2>
+                    <p class="mt-4">{{ play.description | raw }}</p>
+                    
+                    <h4 class="mt-5 mb-2">Rôles</h4>
+                    {% if play.getPlayActorRoles() is not empty %}
+                        <table class="table table-sm">
+                            <thead>
+                                <tr>
+                                    <th>Comédien</th>
+                                    <th>Rôle</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            {% for role in play.getPlayActorRoles() %}
+                                <tr>
+                                    <td>{{ role.actor }}</td>
+                                    <td>{{ role.name ? role.name : ' - ' }}</td>
+                                </tr>
+                            {% else %}
+                                <tr>
+                                    <td colspan=2>Aucun rôle enregistré</td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    {% endif %}
+                </div>
+            </div>
+
+            <div class="row my-3">
+                <h4 class="text-center shadow p-2">Gallerie d'images</h4>
+            </div>
+        </div>
+    {% endif %}
+    
+{% endblock %}
