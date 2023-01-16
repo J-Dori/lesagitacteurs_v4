@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace App\DataFixtures\Helpers;
 
-use Adeliom\EasyMediaBundle\Exception\AlreadyExist;
 use Exception;
 use League\Flysystem\UnableToCopyFile;
-use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\String\Slugger\AsciiSlugger;
+use Adeliom\EasyMediaBundle\Exception\AlreadyExist;
+use Symfony\Component\HttpFoundation\File\Exception\FileException;
 
 trait MediaHelpers
 {
