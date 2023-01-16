@@ -129,6 +129,54 @@ site:
             name: Rôle
             state: État de publication
 
+    contact:
+        crud:
+            title:  
+                page:
+                    edit: Éditer contact
+                    index: Liste de Contacts
+                    new: Nouveau contact
+                    detail: Détails de contact
+            label:
+                page:
+                    singular: contact
+                    plural: contacts
+                    new: Nouveau contact
+                    edit: Éditer contact
+                    delete: Supprimer contact
+        field:
+            enabled: Afficher
+            fullname: Nom
+            firstname: Prénom
+            lastname: Nom
+            address: Adresse
+            zipCode: Code Postal
+            city: Ville
+            phone: Téléphone
+            email: E-mail
+
+    social:
+        crud:
+            title:  
+                page:
+                    edit: Éditer
+                    index: Réseaux Sociaux
+                    new: Nouveau
+                    detail: Détails de Réseaux Sociaux
+            label:
+                page:
+                    singular: détail de contact
+                    plural: détails de contact
+                    new: Nouveau
+                    edit: Éditer
+                    delete: Supprimer
+        field:
+            name: Nom de la Salle
+            facebook: Facebook
+            youtube: YouTube
+            instagram: Instagram
+            mapLink: Lien Google Maps
+
 
 Jan: Jan
 Feb: Fév
@@ -138,4 +186,21 @@ May: Mai
 Jun: Juin
 Jul: Juillet
 Ago: Août
+Sep: Sep
+Oct: Oct
+Nov: Nov
 Dec: Déc
+
+January: Janvier
+February: Février
+Mars: Mars
+April: Avril
+#May: Mai
+June: Juin
+July: Juillet
+August: Août
+September: Septembre
+October: Octobre
+November: November
+December: Décembre
+
