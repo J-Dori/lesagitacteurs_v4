@@ -14,6 +14,8 @@ use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
 use Adeliom\EasyAdminUserBundle\Controller\Admin\EasyAdminUserTrait;
 use App\Entity\Site\Contact;
 use App\Entity\Site\ContactSocial;
+use App\Repository\PlayRepository;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractDashboardController;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 
@@ -21,17 +23,27 @@ class DashboardController extends AbstractDashboardController
 {
     use EasyAdminUserTrait;
 
-    private ParameterBagInterface $parameterBag;
-
-    public function __construct(ParameterBagInterface $parameterBag)
-    {
-        $this->parameterBag = $parameterBag;
-    }
+    public function __construct(
+        private ParameterBagInterface $parameterBag,
+        private PlayRepository $playRepository,
+    )
+    {}
 
     #[Route('/admin', name: 'admin')]
     public function index(): Response
     {
-       return $this->render('admin/index.html.twig');
+        $play = $this->playRepository->getPlayStatusUpFront();
+        $playUpFront = true;
+
+        if (empty($play)) {
+            $play = $this->playRepository->getLastPlay()[0];
+            $playUpFront = false;
+        }
+
+        return $this->render('admin/index.html.twig', [
+            'play' => $play,
+            'playUpFront' => $playUpFront,
+        ]);
     }
 
     public function configureDashboard(): Dashboard
@@ -42,7 +54,8 @@ class DashboardController extends AbstractDashboardController
 
     public function configureMenuItems(): iterable
     {
-        yield MenuItem::linkToDashboard('Dashboard', 'fa fa-home');
+        yield MenuItem::linkToUrl('Page Internet', 'fa fa-home', 'https://lesagitacteurs.fr')->setLinkTarget('blanc');
+        yield MenuItem::linkToDashboard('Tableau de bord', 'fa fa-table-columns');
         yield MenuItem::linkToRoute('Médiathèque', 'fa fa-picture-o', 'media.index')->setPermission('ROLE_ADMIN');
         yield MenuItem::linkToCrud('easy.page.admin.menu.pages', 'fa fa-file-alt', Page::class);
         
@@ -58,8 +71,8 @@ class DashboardController extends AbstractDashboardController
 
         // Contacts
         yield MenuItem::section('Contacts');
-        yield MenuItem::linkToCrud('Liste de Contacts', 'fa fa-contact', Contact::class);
-        yield MenuItem::linkToCrud('Réseaux sociaux', 'fa fa-social', ContactSocial::class);
+        yield MenuItem::linkToCrud('Liste de Contacts', 'fa fa-address-card', Contact::class);
+        yield MenuItem::linkToCrud('Salle/Réseaux sociaux', 'fa fa-thumbs-up', ContactSocial::class)->setEntityId(1)->setAction(Action::EDIT);
 
         // Users
         yield MenuItem::section('Utilisateurs');
