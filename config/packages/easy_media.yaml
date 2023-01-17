@@ -12,7 +12,7 @@ flysystem:
     medias.storage:
       adapter: 'local'
       options:
-        directory: '%kernel.project_dir%/public/storage/medias'
+        directory: '%kernel.project_dir%/public/upload'
 
 easy_media:
   storage_name: flysystem.adapter.medias.storage

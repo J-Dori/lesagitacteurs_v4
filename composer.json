@@ -87,6 +87,9 @@
             "@auto-scripts"
         ],
         "reset-site": [
+            "rm -rf ./public/upload",
+            "mkdir -p public/upload",
+            "chmod -R 777 public/upload",
             "bin/console doctrine:database:drop --force",
             "bin/console doctrine:database:create",
             "bin/console doctrine:migrations:sync-metadata-storage",
