@@ -14,6 +14,8 @@ use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
 use Adeliom\EasyAdminUserBundle\Controller\Admin\EasyAdminUserTrait;
 use App\Entity\Site\Contact;
 use App\Entity\Site\ContactSocial;
+use App\Entity\Site\PlayGallery;
+use App\Repository\PlayGalleryRepository;
 use App\Repository\PlayRepository;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractDashboardController;
@@ -26,6 +28,7 @@ class DashboardController extends AbstractDashboardController
     public function __construct(
         private ParameterBagInterface $parameterBag,
         private PlayRepository $playRepository,
+        private PlayGalleryRepository $playGalleryRepository
     )
     {}
 
@@ -34,22 +37,32 @@ class DashboardController extends AbstractDashboardController
     {
         $play = $this->playRepository->getPlayStatusUpFront();
         $playUpFront = true;
-
+        
         if (empty($play)) {
             $play = $this->playRepository->getLastPlay()[0];
             $playUpFront = false;
         }
+        $gallery = $this->playGalleryRepository->getGalleryByPositionOrder($play, 'ASC');
 
         return $this->render('admin/index.html.twig', [
             'play' => $play,
             'playUpFront' => $playUpFront,
+            'gallery' => $gallery,
         ]);
     }
 
     public function configureDashboard(): Dashboard
     {
         return Dashboard::new()
-            ->setTitle('Les Agit\'acteurs');
+            ->setTitle('<object data="/public/logo/logo.svg"
+            width="200"
+            height="50"
+            type="image/svg+xml">
+        
+        <img src="/public/logo/logo.png"
+            alt="logo" style="width:200px" />
+        
+        </object>');
     }
 
     public function configureMenuItems(): iterable
@@ -62,7 +75,8 @@ class DashboardController extends AbstractDashboardController
         // PLAY
         yield MenuItem::section('Données des Pièces');
         yield MenuItem::linkToCrud('Pièces', 'fa fa-film', Play::class);
-        yield MenuItem::linkToCrud('Piéces - Rôles', 'fa fa-person-through-window', PlayActorRole::class);
+        yield MenuItem::linkToCrud('Rôles', 'fa fa-person-through-window', PlayActorRole::class);
+        yield MenuItem::linkToCrud('Galerie', 'fa fa-camera-retro', PlayGallery::class);
 
         // MEMBERS
         yield MenuItem::section('L\'équipe');

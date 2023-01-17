@@ -16,6 +16,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\FormField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use Adeliom\EasyMediaBundle\Admin\Field\EasyMediaField;
 use App\Form\PlayActorRoleType;
+use App\Form\PlayGalleryType;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
 use EasyCorp\Bundle\EasyAdminBundle\Collection\FieldCollection;
 use EasyCorp\Bundle\EasyAdminBundle\Collection\FilterCollection;
@@ -67,6 +68,14 @@ class PlayCrudController extends AbstractCrudController
             ->allowAdd()
             ->allowDelete()
             ->setEntryIsComplex()
+        ;
+
+        yield FormField::addTab('Galerie');
+        yield CollectionField::new('playGalleries', 'Images')->setEntryType(PlayGalleryType::class)->onlyOnForms()
+            ->allowAdd()
+            ->allowDelete()
+            ->setEntryIsComplex()
+            ->showEntryLabel()
         ;
 
     }

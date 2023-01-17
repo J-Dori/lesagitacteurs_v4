@@ -54,6 +54,7 @@ site:
             email: E-mail
             state: État de publication
             image: Flyer de la pièce
+
     team:
         crud:
             title:
@@ -128,6 +129,25 @@ site:
             actor: Acteurs
             name: Rôle
             state: État de publication
+
+    play_gallery:
+        crud:
+            title:
+                page:
+                    edit: Remplacer l'image
+                    index: Galerie d'images
+                    new: Ajouter image
+            label:
+                page:
+                    singular: une image
+                    plural: des images
+                    new: Nouvelle image
+                    edit: Remplacer l'image
+                    delete: Supprimer l'image
+        field: 
+            play: Pièce
+            image: Image
+            position: Position
 
     contact:
         crud:

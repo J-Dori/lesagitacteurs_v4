@@ -8,6 +8,7 @@ use Doctrine\DBAL\Types\Types;
 use App\Entity\EasyMedia\Media;
 use Doctrine\ORM\Mapping as ORM;
 use App\Entity\Site\PlayActorRole;
+use App\Entity\Site\PlayGallery;
 use App\Repository\PlayRepository;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -48,9 +49,14 @@ class Play
     #[ORM\OneToMany(mappedBy: 'play', targetEntity: PlayActorRole::class, orphanRemoval: true, cascade: ['persist'])]
     private Collection|null $playActorRoles;
 
+    #[ORM\OneToMany(mappedBy: 'play', targetEntity: PlayGallery::class, orphanRemoval: true, cascade: ['persist'])]
+    private Collection $playGalleries;
+
+
     public function __construct()
     {
         $this->playActorRoles = new ArrayCollection();
+        $this->playGalleries = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -198,6 +204,41 @@ class Play
     public function __toString()
     {
         return $this->name;
+    }
+
+    public function getYearAndName()
+    {
+        return $this->getYear() .' - '. $this->name;
+    }
+
+    /**
+     * @return Collection<int, PlayGallery>
+     */
+    public function getPlayGalleries(): Collection
+    {
+        return $this->playGalleries;
+    }
+
+    public function addPlayGallery(PlayGallery $playGallery): self
+    {
+        if (!$this->playGalleries->contains($playGallery)) {
+            $this->playGalleries->add($playGallery);
+            $playGallery->setPlay($this);
+        }
+
+        return $this;
+    }
+
+    public function removePlayGallery(PlayGallery $playGallery): self
+    {
+        if ($this->playGalleries->removeElement($playGallery)) {
+            // set the owning side to null (unless already changed)
+            if ($playGallery->getPlay() === $this) {
+                $playGallery->setPlay(null);
+            }
+        }
+
+        return $this;
     }
 
 }
