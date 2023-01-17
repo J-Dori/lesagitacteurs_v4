@@ -4,17 +4,16 @@ declare(strict_types=1);
 
 namespace App\DataFixtures\Entities;
 
-use Adeliom\EasyMediaBundle\Service\EasyMediaManager;
-use App\DataFixtures\Helpers\MediaHelpers;
 use DateTime;
 use App\Entity\Site\Play;
-use App\Trait\ObjectStateEnum;
 use App\Trait\PlayStatusEnum;
+use App\Trait\ObjectStateEnum;
 use Doctrine\Persistence\ObjectManager;
+use App\DataFixtures\Helpers\MediaHelpers;
 use Doctrine\Bundle\FixturesBundle\Fixture;
-use Doctrine\Bundle\FixturesBundle\FixtureGroupInterface;
-use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpKernel\KernelInterface;
+use Adeliom\EasyMediaBundle\Service\EasyMediaManager;
+use Doctrine\Bundle\FixturesBundle\FixtureGroupInterface;
 
 class PlayFixtures extends Fixture implements FixtureGroupInterface
 {
@@ -41,10 +40,7 @@ class PlayFixtures extends Fixture implements FixtureGroupInterface
 
     public function load(ObjectManager $manager): void
     {
-        $dir = new Filesystem();
-        $projectDir = $this->kernel->getProjectDir();
-        $dir->remove($projectDir . '/public/storage/medias/pieces');
-        sleep(1);
+        dump('*************** LOADING : Pièces ***************');
 
         $arrayData = $this->getData();
         foreach ($arrayData as $array) {
@@ -60,6 +56,7 @@ class PlayFixtures extends Fixture implements FixtureGroupInterface
             $manager->persist($data);
             $this->addReference($array['ref'], $data);
             $manager->flush();
+            dump($array['name']);
         }
     }
 
