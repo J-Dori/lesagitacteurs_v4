@@ -3,8 +3,8 @@
 namespace App\Repository;
 
 use App\Entity\Site\Play;
-use App\Trait\ObjectStateEnum;
 use App\Trait\PlayStatusEnum;
+use App\Trait\ObjectStateEnum;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
@@ -50,6 +50,17 @@ class PlayRepository extends ServiceEntityRepository
                 ->setMaxResults(1)
                 ->getQuery()
                 ->getResult()
+        ;
+    }
+
+    public function setAllStatusToClose()
+    {
+        return $this->createQueryBuilder('p')
+                ->update()
+                ->set('p.playStatus', ':value')
+                ->setParameter('value', PlayStatusEnum::CLOSED)
+                ->getQuery()
+                ->execute()
         ;
     }
 
