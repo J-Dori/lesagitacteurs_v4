@@ -6,10 +6,12 @@ use App\Trait\PlayStatusEnum;
 use App\Trait\ObjectStateEnum;
 use Doctrine\DBAL\Types\Types;
 use App\Entity\EasyMedia\Media;
+use App\Entity\Site\PlayGallery;
 use Doctrine\ORM\Mapping as ORM;
 use App\Entity\Site\PlayActorRole;
-use App\Entity\Site\PlayGallery;
 use App\Repository\PlayRepository;
+use App\Entity\Financial\FinIncome;
+use App\Entity\Financial\FinExpense;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
 
@@ -52,11 +54,19 @@ class Play
     #[ORM\OneToMany(mappedBy: 'play', targetEntity: PlayGallery::class, orphanRemoval: true, cascade: ['persist'])]
     private Collection $playGalleries;
 
+    #[ORM\OneToMany(mappedBy: 'play', targetEntity: FinIncome::class, orphanRemoval: false)]
+    private Collection $finIncomes;
+
+    #[ORM\OneToMany(mappedBy: 'play', targetEntity: FinExpense::class, orphanRemoval: false)]
+    private Collection $finExpenses;
+
 
     public function __construct()
     {
         $this->playActorRoles = new ArrayCollection();
         $this->playGalleries = new ArrayCollection();
+        $this->finIncomes = new ArrayCollection();
+        $this->finExpenses = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -235,6 +245,66 @@ class Play
             // set the owning side to null (unless already changed)
             if ($playGallery->getPlay() === $this) {
                 $playGallery->setPlay(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, FinIncome>
+     */
+    public function getFinIncomes(): Collection
+    {
+        return $this->finIncomes;
+    }
+
+    public function addFinIncome(FinIncome $finIncome): self
+    {
+        if (!$this->finIncomes->contains($finIncome)) {
+            $this->finIncomes->add($finIncome);
+            $finIncome->setPlay($this);
+        }
+
+        return $this;
+    }
+
+    public function removeFinIncome(FinIncome $finIncome): self
+    {
+        if ($this->finIncomes->removeElement($finIncome)) {
+            // set the owning side to null (unless already changed)
+            if ($finIncome->getPlay() === $this) {
+                $finIncome->setPlay(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, FinExpense>
+     */
+    public function getFinExpenses(): Collection
+    {
+        return $this->finExpenses;
+    }
+
+    public function addFinExpense(FinExpense $finExpense): self
+    {
+        if (!$this->finExpenses->contains($finExpense)) {
+            $this->finExpenses->add($finExpense);
+            $finExpense->setPlay($this);
+        }
+
+        return $this;
+    }
+
+    public function removeFinExpense(FinExpense $finExpense): self
+    {
+        if ($this->finExpenses->removeElement($finExpense)) {
+            // set the owning side to null (unless already changed)
+            if ($finExpense->getPlay() === $this) {
+                $finExpense->setPlay(null);
             }
         }
 

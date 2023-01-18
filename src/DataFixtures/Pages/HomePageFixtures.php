@@ -58,7 +58,8 @@ class HomePageFixtures extends Fixture implements FixtureGroupInterface
             }
         }
 
-        //$this->createMedia('defaut', 'logo.png')?->getId();
+        $this->createMedia('systeme', 'logo.png')?->getId();
+        $this->createMedia('systeme', 'logo.svg')?->getId();
 
     }
 

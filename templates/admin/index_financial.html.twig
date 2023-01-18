@@ -1,0 +1,103 @@
+{% extends '@EasyAdmin/page/content.html.twig' %}
+
+{% block head_stylesheets %}
+    {{ parent() }}
+    <style>
+        .table-title { padding: 10px 15px; margin-bottom: 10px; }
+        .table-title h4 { padding: 0; margin 0 0 0 m !important; }
+        th, td { padding: 5px 15px; }
+        th { text-align: center; }
+    </style>
+{% endblock %}
+
+{% block main %}{{ block('page_content') }}
+    {% set totalExpenses = 0 %}
+    {% for expense in expenses %}
+        {% set totalExpenses = totalExpenses + expense.amount %}
+    {% endfor %}
+
+    {% set totalIncomes = 0 %}
+    {% for expense in incomes %}
+        {% set totalIncomes = totalIncomes + expense.amount %}
+    {% endfor %}
+
+    <div class="dashboard_layout_financial">
+        
+        <div class="row pb-4">
+            <div class="d-flex justify-content-between">
+                <div>
+                    <h2>Gestion Financière</h2>
+                    <h3>{{ play.getYearAndName }}</h3>
+                </div>
+                <div>
+                    <h2 class="text-right">Solde</h2>
+                    {% set totalYear = (totalIncomes - 1000) - totalExpenses %}
+                    {% if totalYear >= 0 %}
+                        <h3 class="text-success text-right">{{ totalYear|number_format(2, ',', ' ') }}&ensp;&euro;</h3>
+                    {% else %}
+                        <h3 class="text-danger text-right">{{ totalYear|number_format(2, ',', ' ') }}&ensp;&euro;</h3>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+        <div class="row justify-content-between flex-wrap">
+            <div class="col-auto mt-3">
+                <div class="table-title bg-danger d-flex justify-content-between">
+                    <h4>Dépenses</h4>
+                    <h4>{{ totalExpenses|number_format(2, ',', ' ') }}&ensp;&euro;</h4>
+                </div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Catégorie</th>
+                            <th>Mode Paiement</th>
+                            <th>Nº Doc</th>
+                            <th>Montant</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for expense in expenses %}
+                            <tr>
+                                <td class="text-center">{{ expense.date|date('d-m-Y') }}</td>
+                                <td>{{ expense.category }}</td>
+                                <td class="text-center">{{ expense.payMode }}</td>
+                                <td class="text-center">{{ expense.docNumber }}</td>
+                                <td class="text-right">{{ expense.amount|number_format(2, ',', ' ') }}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="col-auto mt-3">
+                <div class="table-title bg-success d-flex justify-content-between">
+                    <h4>Revenus</h4>
+                    <h4>{{ totalIncomes|number_format(2, ',', ' ') }}&ensp;&euro;</h4>
+                </div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Catégorie</th>
+                            <th>Mode Paiement</th>
+                            <th>Montant</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for income in incomes %}
+                            <tr>
+                                <td class="text-center">{{ income.date|date('d-m-Y') }}</td>
+                                <td>{{ income.category }}</td>
+                                <td class="text-center">{{ income.payMode }}</td>
+                                <td class="text-right">{{ income.amount|number_format(2, ',', ' ') }}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+{% endblock %}

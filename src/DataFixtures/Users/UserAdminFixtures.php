@@ -78,6 +78,13 @@ class UserAdminFixtures extends Fixture implements FixtureGroupInterface
                 'firstname' => 'Laetitia',
                 'lastname' => 'SCHUBNEL',
             ],           
+            [
+                'email' => 'estelle.goncalves@gmail.com', 
+                'roles' => ["ROLE_EDITOR"], 
+                'password' => '$2y$13$UUphexWY/fVixvTA61nVau4Ih4MN9M5OEJx27aQ7nH8j1zGRHqvZW', //Estelle!2023
+                'firstname' => 'Estelle',
+                'lastname' => 'GONÇALVES',
+            ],           
         ];
     }
 

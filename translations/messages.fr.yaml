@@ -25,6 +25,13 @@ easy:
             enabled: Actif
             disabled: Inactif
             pending: En attente
+        payMode:
+            CB: CB
+            Chèque: Chèque
+            Espèces: Espèces
+            Internet: Internet
+            Virement: Virement
+            
 
 site:
     play:
