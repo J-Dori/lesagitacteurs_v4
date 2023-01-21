@@ -2,6 +2,7 @@
 
 namespace App\Entity\Site;
 
+use App\Entity\Financial\FinBilan;
 use App\Trait\PlayStatusEnum;
 use App\Trait\ObjectStateEnum;
 use Doctrine\DBAL\Types\Types;
@@ -60,6 +61,9 @@ class Play
     #[ORM\OneToMany(mappedBy: 'play', targetEntity: FinExpense::class, orphanRemoval: false)]
     private Collection $finExpenses;
 
+    #[ORM\OneToMany(mappedBy: 'play', targetEntity: FinBilan::class)]
+    private Collection $finBilans;
+
 
     public function __construct()
     {
@@ -67,6 +71,7 @@ class Play
         $this->playGalleries = new ArrayCollection();
         $this->finIncomes = new ArrayCollection();
         $this->finExpenses = new ArrayCollection();
+        $this->finBilans = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -305,6 +310,36 @@ class Play
             // set the owning side to null (unless already changed)
             if ($finExpense->getPlay() === $this) {
                 $finExpense->setPlay(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, FinBilan>
+     */
+    public function getFinBilans(): Collection
+    {
+        return $this->finBilans;
+    }
+
+    public function addFinBilan(FinBilan $finBilan): self
+    {
+        if (!$this->finBilans->contains($finBilan)) {
+            $this->finBilans->add($finBilan);
+            $finBilan->setPlay($this);
+        }
+
+        return $this;
+    }
+
+    public function removeFinBilan(FinBilan $finBilan): self
+    {
+        if ($this->finBilans->removeElement($finBilan)) {
+            // set the owning side to null (unless already changed)
+            if ($finBilan->getPlay() === $this) {
+                $finBilan->setPlay(null);
             }
         }
 
