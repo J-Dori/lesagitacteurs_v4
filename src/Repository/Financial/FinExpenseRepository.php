@@ -3,8 +3,9 @@
 namespace App\Repository\Financial;
 
 use App\Entity\Financial\FinExpense;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use App\Repository\Financial\FinBilanRepository;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 
 /**
  * @extends ServiceEntityRepository<FinExpense>
@@ -16,7 +17,7 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class FinExpenseRepository extends ServiceEntityRepository
 {
-    public function __construct(ManagerRegistry $registry)
+    public function __construct(ManagerRegistry $registry, private FinBilanRepository $finBilanRepository)
     {
         parent::__construct($registry, FinExpense::class);
     }
@@ -37,6 +38,39 @@ class FinExpenseRepository extends ServiceEntityRepository
         if ($flush) {
             $this->getEntityManager()->flush();
         }
+    }
+
+    public function getBilanActive()
+    {
+        $bilan = $this->finBilanRepository->getActive();
+
+        $q = $this->createQueryBuilder('f');
+        if (!empty($bilan)) {
+            $q->where('f.finBilan = :bilan');
+            $q->setParameter('bilan', $bilan);
+        }
+        return $q;
+    }
+
+    public function getListByBilanActive($fullQuery = true)
+    {
+        $q = $this->getBilanActive();
+        $q->orderBy('f.date', 'DESC');
+
+        if ($fullQuery) {
+            return $q->getQuery()->getResult();
+        }
+
+        return $q;
+    }
+
+    public function getTotalSumByYearSession()
+    {
+        $q = $this->getListByBilanActive(false);
+        $q->select('SUM(f.amount) AS total');
+        $result = $q->getQuery()->getSingleColumnResult();
+        
+        return $result[0];
     }
 
 }

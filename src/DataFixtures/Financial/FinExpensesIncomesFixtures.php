@@ -3,6 +3,7 @@
 namespace App\DataFixtures\Financial;
 
 use App\Entity\Site\Play;
+use App\Entity\Financial\FinBilan;
 use App\Entity\Financial\FinIncome;
 use App\Entity\Financial\FinExpense;
 use App\Entity\Financial\FinCategory;
@@ -10,7 +11,6 @@ use Doctrine\Persistence\ObjectManager;
 use Doctrine\ORM\EntityManagerInterface;
 use App\DataFixtures\Entities\PlayFixtures;
 use Doctrine\Bundle\FixturesBundle\Fixture;
-use App\DataFixtures\Financial\FinCategoryFixtures;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 
 class FinExpensesIncomesFixtures extends Fixture implements DependentFixtureInterface
@@ -20,7 +20,7 @@ class FinExpensesIncomesFixtures extends Fixture implements DependentFixtureInte
 
     public function getDependencies()
     {
-        return [PlayFixtures::class, FinCategoryFixtures::class];
+        return [PlayFixtures::class, FinancialGeneralFixtures::class];
     }
 
     public function load(ObjectManager $manager): void
@@ -38,6 +38,7 @@ class FinExpensesIncomesFixtures extends Fixture implements DependentFixtureInte
             $data->setAmount($array['amount']);
             $data->setDocNumber($array['doc_number']);
             $data->setNotes($array['notes']);
+            $data->setFinBilan($this->entityManager->getRepository(FinBilan::class)->find($this->getReference('bilan')->getId()));
             $manager->persist($data);
         }
         $manager->flush();
@@ -53,6 +54,7 @@ class FinExpensesIncomesFixtures extends Fixture implements DependentFixtureInte
             $data->setAmount($array['amount']);
             $data->setDocNumber($array['doc_number']);
             $data->setNotes($array['notes']);
+            $data->setFinBilan($this->entityManager->getRepository(FinBilan::class)->find($this->getReference('bilan')->getId()));
             $manager->persist($data);
         }
         $manager->flush();

@@ -1,0 +1,11 @@
+{# @var ea \EasyCorp\Bundle\EasyAdminBundle\Context\AdminContext #}
+{# @var field \EasyCorp\Bundle\EasyAdminBundle\Dto\FieldDto #}
+{# @var entity \EasyCorp\Bundle\EasyAdminBundle\Dto\EntityDto #}
+
+{% if field.property == 'amount' %}
+    <div class="text-right">{{ field.value|number_format(2, ',', ' ') }}&ensp;&euro;&emsp;</div>
+{% else %}
+    <div>{{ field.value|number_format(2, ',', ' ') }}&ensp;&euro;&emsp;</div>
+{% endif %}
+
+

@@ -2,16 +2,30 @@
 
 namespace App\DataFixtures\Financial;
 
+use App\Entity\Site\Play;
 use App\Entity\Financial\FinBank;
+use App\Entity\Financial\FinBilan;
 use App\Entity\Financial\FinCategory;
 use Doctrine\Persistence\ObjectManager;
+use Doctrine\ORM\EntityManagerInterface;
+use App\DataFixtures\Entities\PlayFixtures;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 
-class FinCategoryFixtures extends Fixture 
+class FinancialGeneralFixtures extends Fixture 
 {
+    public function __construct(private EntityManagerInterface $manager)
+    {}
+
     public function load(ObjectManager $manager): void
     {
         dump('*************** LOADING : Gestion Financière ***************');
+
+        $data = new FinBilan();
+        $data->setYear('2022');
+        $data->setActive('ACTIVE');
+        $data->setPlay($this->manager->getRepository(Play::class)->find($this->getReference(PlayFixtures::PETER_PAN)->getId()));
+        $this->addReference('bilan', $data);
+        $manager->persist($data);
 
         $data = new FinBank();
         $data->setBankName('Crédit Mutuelle');
@@ -24,7 +38,7 @@ class FinCategoryFixtures extends Fixture
         $arrayData = $this->getData();
         foreach ($arrayData as $array) {
             $data = new FinCategory();
-            $data->setName($array['name'] ?? null);        
+            $data->setName($array['name'] ?? null);
             $manager->persist($data);
         }
         $manager->flush();
@@ -33,7 +47,7 @@ class FinCategoryFixtures extends Fixture
     public function getData(): array
     {
         return [
-            ['name' => 'Revenu'],
+            ['name' => 'Recette'],
             ['name' => 'Alimentation'],
             ['name' => 'Décoration'],
             ['name' => 'Costume'],

@@ -39,13 +39,42 @@ class FinBankRepository extends ServiceEntityRepository
         }
     }
 
-    public function getYearOnActiveBank(): array
+    public function setAllActiveFalse()
     {
         return $this->createQueryBuilder('f')
+                ->update()
+                ->set('f.active', ':value')
+                ->setParameter('value', false)
+                ->getQuery()
+                ->execute()
+        ;
+    }
+
+    public function getCurrentBalance(): ?float
+    {
+        $q = $this->createQueryBuilder('f')
+            ->select('f.balance')
             ->where('f.active = :active')
             ->setParameter('active', true)
             ->getQuery()
             ->getOneOrNullResult();
+        ;
+
+        if (empty($q)) { return 0; }
+
+        return $q['balance'];
+    }
+
+    public function updateBalance(float $value)
+    {
+        return $this->createQueryBuilder('f')
+                ->update()
+                ->set('f.balance', ':value')
+                ->setParameter('value', $value)
+                ->where('f.active = :active')
+                ->setParameter('active', true)
+                ->getQuery()
+                ->execute()
         ;
     }
 

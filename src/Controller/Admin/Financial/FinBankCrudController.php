@@ -41,7 +41,7 @@ class FinBankCrudController extends AbstractCrudController
     {
         yield TextField::new('year', 'Session ouverte');
         yield TextField::new('bankName', 'Nom de la banque');
-        yield NumberField::new('balance', 'Solde')->setNumDecimals(2);
+        yield NumberField::new('balance', 'Solde prévisionnel')->setNumDecimals(2)->setTemplatePath('admin/financial/field/currency.html.twig');
         if ($pageName == Crud::PAGE_INDEX)
             yield BooleanField::new('active', 'Actif')->renderAsSwitch(false);
         else

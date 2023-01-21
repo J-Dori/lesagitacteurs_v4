@@ -3,8 +3,9 @@
 namespace App\Repository\Financial;
 
 use App\Entity\Financial\FinIncome;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use App\Repository\Financial\FinBilanRepository;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 
 /**
  * @extends ServiceEntityRepository<FinIncome>
@@ -16,7 +17,7 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class FinIncomeRepository extends ServiceEntityRepository
 {
-    public function __construct(ManagerRegistry $registry)
+    public function __construct(ManagerRegistry $registry, private FinBilanRepository $finBilanRepository)
     {
         parent::__construct($registry, FinIncome::class);
     }
@@ -39,28 +40,37 @@ class FinIncomeRepository extends ServiceEntityRepository
         }
     }
 
-//    /**
-//     * @return FinIncome[] Returns an array of FinIncome objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('f')
-//            ->andWhere('f.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('f.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
+    public function getBilanActive()
+    {
+        $bilan = $this->finBilanRepository->getActive();
 
-//    public function findOneBySomeField($value): ?FinIncome
-//    {
-//        return $this->createQueryBuilder('f')
-//            ->andWhere('f.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
+        $q = $this->createQueryBuilder('f');
+        if (!empty($bilan)) {
+            $q->where('f.finBilan = :bilan');
+            $q->setParameter('bilan', $bilan);
+        }
+        return $q;
+    }
+
+    public function getListByBilanActive($fullQuery = true)
+    {
+        $q = $this->getBilanActive();
+        $q->orderBy('f.date', 'DESC');
+
+        if ($fullQuery) {
+            return $q->getQuery()->getResult();
+        }
+
+        return $q;
+    }
+
+    public function getTotalSumByYearSession()
+    {
+        $q = $this->getListByBilanActive(false);
+        $q->select('SUM(f.amount) AS total');
+        $result = $q->getQuery()->getSingleColumnResult();
+        
+        return $result[0];
+    }
+
 }

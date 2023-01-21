@@ -2,43 +2,57 @@
 
 namespace App\Controller\Admin;
 
-use App\Entity\Site\Play;
-use App\Entity\Site\Team;
-use App\Entity\Site\Actor;
-use App\Entity\Site\Contact;
 use App\Entity\EasyPage\Page;
-use App\Entity\Site\PlayGallery;
-use App\Entity\Site\ContactSocial;
-use App\Entity\Site\PlayActorRole;
-use App\Repository\PlayRepository;
+use App\Entity\Financial\FinBilan;
+use App\Entity\Financial\FinBank;
+use App\Entity\Financial\FinCategory;
 use App\Entity\Financial\FinIncome;
 use App\Entity\Financial\FinExpense;
-use App\Entity\Financial\FinCategory;
+use App\Entity\Site\Actor;
+use App\Entity\Site\Contact;
+use App\Entity\Site\ContactSocial;
+use App\Entity\Site\Play;
+use App\Entity\Site\PlayActorRole;
+use App\Entity\Site\PlayGallery;
+use App\Entity\Site\Team;
+use App\Repository\PlayRepository;
 use App\Repository\PlayGalleryRepository;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
+use App\Repository\Financial\FinBankRepository;
+use App\Repository\Financial\FinBilanRepository;
 use App\Repository\Financial\FinIncomeRepository;
 use App\Repository\Financial\FinExpenseRepository;
+use Adeliom\EasyAdminUserBundle\Controller\Admin\EasyAdminUserTrait;
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Annotation\Route;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
 use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
-use Adeliom\EasyAdminUserBundle\Controller\Admin\EasyAdminUserTrait;
-use App\Entity\Financial\FinBank;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractDashboardController;
-use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 
 class DashboardController extends AbstractDashboardController
 {
     use EasyAdminUserTrait;
 
+    private $bilan = null;
+    private $incomes = null;
+    private $expenses = null;
+
     public function __construct(
         private ParameterBagInterface $parameterBag,
         private PlayRepository $playRepository,
         private PlayGalleryRepository $playGalleryRepository,
-        private FinIncomeRepository $income,
-        private FinExpenseRepository $expense,
+        private FinIncomeRepository $finIncomeRepository,
+        private FinExpenseRepository $finExpenseRepository,
+        private FinBilanRepository $finBilanRepository,
+        private FinBankRepository $finBankRepository,
     )
-    {}
+    {
+        $this->bilan = $this->finBilanRepository->getActive();
+        $this->incomes = $this->finIncomeRepository->getListByBilanActive();
+        $this->expenses = $this->finExpenseRepository->getListByBilanActive();
+    }
 
     #[Route('/admin', name: 'admin')]
     public function index(): Response
@@ -52,23 +66,25 @@ class DashboardController extends AbstractDashboardController
         }
 
         // Admin User Dashboard page
-        if ($this->isGranted('ROLE_AMIN')) {
+        if ($this->isGranted('ROLE_ADMINISTRATOR')) {
             $gallery = $this->playGalleryRepository->getGalleryByPositionOrder($play, 'ASC');
-            return $this->render('admin/index.html.twig', [
+            return $this->render('admin/dashboard/index.html.twig', [
                 'play' => $play,
                 'playUpFront' => $playUpFront,
                 'gallery' => $gallery,
+                'bilan' => $this->bilan,
+                'balance' => $this->finBankRepository->getCurrentBalance(),
+                'incomes' => $this->incomes,
+                'expenses' => $this->expenses,
             ]);
         }
 
         // Financial Dashboard page
-        $incomes = $this->income->findBy(['play' => $play], ['date' => 'DESC']);
-        $expenses = $this->expense->findBy(['play' => $play], ['date' => 'DESC']);
-
-        return $this->render('admin/index_financial.html.twig', [
-            'play' => $play,
-            'incomes' => $incomes,
-            'expenses' => $expenses,
+        return $this->render('admin/dashboard/index_financial.html.twig', [
+            'bilan' => $this->bilan,
+            'balance' => $this->finBankRepository->getCurrentBalance(),
+            'incomes' => $this->incomes,
+            'expenses' => $this->expenses,
         ]);
         
     }
@@ -85,6 +101,13 @@ class DashboardController extends AbstractDashboardController
             alt="logo" style="width:200px" />
         
         </object>');
+    }
+
+    public function configureCrud(): Crud
+    {
+        return Crud::new()
+            ->setDateFormat('dd-MM-Y')
+        ;
     }
 
     public function configureMenuItems(): iterable
@@ -116,10 +139,17 @@ class DashboardController extends AbstractDashboardController
 
         // Financial
         yield MenuItem::section('Gestion Financière')->setPermission('ROLE_EDITOR');
-        yield MenuItem::linkToCrud('Dépenses', 'fa fa-euro text-danger', FinExpense::class)->setPermission('ROLE_EDITOR');
-        yield MenuItem::linkToCrud('Revenues', 'fa fa-cart-arrow-down text-success', FinIncome::class)->setPermission('ROLE_EDITOR');
+        yield MenuItem::linkToCrud('Dépenses', 'fa fa-euro text-danger', FinExpense::class)
+            ->setBadge($this->bilan ? count($this->expenses) : '', 'danger')
+            ->setPermission('ROLE_EDITOR');
+        yield MenuItem::linkToCrud('Recettes', 'fa fa-cart-arrow-down text-success', FinIncome::class)
+            ->setBadge($this->bilan ? count($this->incomes) : '', 'success')
+            ->setPermission('ROLE_EDITOR');
+        yield MenuItem::linkToCrud('Bilan', 'fa fa-chart-line', FinBilan::class)
+            ->setBadge($this->bilan ? $this->bilan->getYear() : '', 'secondary')
+            ->setPermission('ROLE_EDITOR');
         yield MenuItem::linkToCrud('Catégories', 'fa fa-list-ul', FinCategory::class)->setPermission('ROLE_EDITOR');
-        yield MenuItem::linkToCrud('Banque', 'fa fa-university', FinBank::class)->setPermission('ROLE_EDITOR');
+        yield MenuItem::linkToCrud('Comptes Bancaires', 'fa fa-university', FinBank::class)->setPermission('ROLE_EDITOR');
         
     }
 }

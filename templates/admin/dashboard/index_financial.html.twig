@@ -1,0 +1,33 @@
+{% extends '@EasyAdmin/page/content.html.twig' %}
+
+{% block head_stylesheets %}
+	{{ parent() }}
+	<style>
+		.totalYear {
+			font-weight: bold;
+		}
+		.table-title {
+			padding: 10px 15px;
+			margin-bottom: 10px;
+		}
+		.table-title h4 {
+			padding: 0 !important;
+			margin: 0 0 0 10px !important;
+			color: white !important;
+		}
+		th,
+		td {
+			padding: 5px 15px;
+			border-bottom: 1px solid rgb(202, 202, 202);
+		}
+		th {
+			text-align: center;
+		}
+	</style>
+{% endblock %}
+
+{% block main %}
+	{{ block('page_content') }}
+		{% include "admin/dashboard/_index_tab_bilan.html.twig" %}
+	{% endblock %}
+{% endblock %}

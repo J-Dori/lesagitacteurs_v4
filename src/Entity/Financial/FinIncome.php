@@ -36,6 +36,9 @@ class FinIncome
     #[ORM\ManyToOne(inversedBy: 'finIncomes')]
     private ?FinCategory $category = null;
 
+    #[ORM\ManyToOne(inversedBy: 'finIncomes')]
+    private ?FinBilan $finBilan = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -125,10 +128,22 @@ class FinIncome
         return $this;
     }
 
+    public function getFinBilan(): ?FinBilan
+    {
+        return $this->finBilan;
+    }
+
+    public function setFinBilan(?FinBilan $finBilan): self
+    {
+        $this->finBilan = $finBilan;
+
+        return $this;
+    }
+
     public function __toString()
     {
-        $category = $this->category ? ' - '. $this->category->getName() : '';
+        $category = $this->category ? ' : '. $this->category->getName() : '';
         $date = $this->date ? ' du '. date_format($this->date, 'd-m-Y') : '';
-        return 'Revenu ' . $category . $date;
+        return 'Recette ' . $category . $date;
     }
 }

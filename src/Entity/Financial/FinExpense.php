@@ -38,6 +38,9 @@ class FinExpense
     #[ORM\ManyToOne(inversedBy: 'finExpenses')]
     private ?FinCategory $category = null;
 
+    #[ORM\ManyToOne(inversedBy: 'finExpenses')]
+    private ?FinBilan $finBilan = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -127,10 +130,23 @@ class FinExpense
         return $this;
     }
 
+    public function getFinBilan(): ?FinBilan
+    {
+        return $this->finBilan;
+    }
+
+    public function setFinBilan(?FinBilan $finBilan): self
+    {
+        $this->finBilan = $finBilan;
+
+        return $this;
+    }
+
     public function __toString()
     {
-        $category = $this->category ? ' - '. $this->category->getName() : '';
+        $category = $this->category ? ' : '. $this->category->getName() : '';
         $date = $this->date ? ' du '. date_format($this->date, 'd-m-Y') : '';
         return 'Dépense ' . $category . $date;
     }
+
 }
