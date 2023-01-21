@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="robots" content="noindex, nofollow, noarchive, nosnippet, noodp, noimageindex, notranslate, nocache" />
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <meta name="generator" content="EasyAdmin" />
+
+    {% block head_favicon %}
+        <link rel="shortcut icon" href="{{ asset('logo/favicon.ico') }}">
+    {% endblock %}
+
+    <title>Les Agit'acteurs</title>
+
+    {% block head_stylesheets %}
+        <link rel="stylesheet" href="{{ asset('app.css', constant('EasyCorp\\Bundle\\EasyAdminBundle\\Asset\\AssetPackage::PACKAGE_NAME')) }}">
+    {% endblock %}
+
+    {% block head_javascript %}
+        <script src="{{ asset('app.js', constant('EasyCorp\\Bundle\\EasyAdminBundle\\Asset\\AssetPackage::PACKAGE_NAME')) }}"></script>
+    {% endblock head_javascript %}
+</head>
+<body id="{% block body_id %}{% endblock %}" class="page-login">
+
+{% trans_default_domain ea is defined ? ea.i18n.translationDomain : (translation_domain is defined ? translation_domain ?? 'messages') %}
+
+{% block wrapper_wrapper %}
+    {% set _username_label = username_label is defined ? username_label|trans : 'login_page.username'|trans({}, 'EasyAdminBundle') %}
+    {% set _password_label = password_label is defined ? password_label|trans : 'login_page.password'|trans({}, 'EasyAdminBundle') %}
+    {% set _forgot_password_label = forgot_password_label is defined ? forgot_password_label|trans : 'login_page.forgot_password'|trans({}, 'EasyAdminBundle') %}
+    {% set _remember_me_label = remember_me_label is defined ? remember_me_label|trans : 'login_page.remember_me'|trans({}, 'EasyAdminBundle') %}
+    {% set _sign_in_label = sign_in_label is defined ? sign_in_label|trans : 'login_page.sign_in'|trans({}, 'EasyAdminBundle') %}
+
+    {% include '@EasyAdmin/flash_messages.html.twig' %}
+
+    <div class="login-wrapper">
+        <header class="mt-4">
+            <div id="header-logo">
+                <object data="/public/upload/systeme/logo-svg.svg"
+                    width="400"
+                    height="100"
+                    type="image/svg+xml">
+                
+                <img src="/public/upload/systeme/logo-png.png"
+                    alt="logo" style="width:400px" />
+                
+                </object>
+            </div>
+        </header>
+
+        <section class="content">
+
+            {% if error|default(false) %}
+                <div class="w-100 alert alert-danger rounded mb-3">
+                    <i class="fas fa-times-circle mr-1"></i>
+                    {{ error.messageKey|trans(error.messageData, 'security') }}
+                </div>
+            {% endif %}
+
+            <form method="post" action="{{ action|default('') }}">
+                {% if csrf_token_intention|default(false) %}
+                    <input type="hidden" name="_csrf_token" value="{{ csrf_token(csrf_token_intention) }}">
+                {% endif %}
+
+                <input type="hidden" name="{{ target_path_parameter|default('_target_path') }}" value="{{ target_path|default(ea is defined ? path(ea.dashboardRouteName) : '/') }}" />
+
+                <div class="form-group">
+                    <label class="form-control-label required" for="username">{{ _username_label }}</label>
+                    <div class="form-widget">
+                        <input type="text" id="username" name="{{ username_parameter|default('_username') }}" class="form-control" value="{{ last_username|default('') }}" required autofocus autocomplete="username">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label required" for="password">{{ _password_label }}</label>
+                    <div class="form-widget">
+                        <input type="password" id="password" name="{{ password_parameter|default('_password') }}" class="form-control" required autocomplete="current-password">
+                    </div>
+                </div>
+
+                {% if remember_me_enabled|default(true) %}
+                    <div class="form-group">
+                        <input class="form-check-input" type="checkbox" id="remember_me" name="{{ remember_me_parameter|default('_remember_me') }}" {{ remember_me_checked|default(false) ? 'checked' }}>
+                        <label class="form-check-label" for="remember_me">
+                            {{ _remember_me_label }}
+                        </label>
+                    </div>
+                {% endif %}
+
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary btn-lg btn-block">{{ _sign_in_label }}</button>
+                </div>
+            </form>
+
+            <script src="{{ asset('login.js', constant('EasyCorp\\Bundle\\EasyAdminBundle\\Asset\\AssetPackage::PACKAGE_NAME')) }}"></script>
+        </section>
+    </div>
+{% endblock %}
+</body>
+</html>

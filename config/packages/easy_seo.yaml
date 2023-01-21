@@ -1,6 +1,6 @@
 easy_seo:
   title:
-    suffix: ACME # Change the title suffix
+    suffix: Les Agit'acteurs # Change the title suffix
     separator: '|' # Change the title separator
   breadcrumbs:
     class: 'breadcrumb'
