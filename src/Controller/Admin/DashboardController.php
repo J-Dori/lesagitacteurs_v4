@@ -112,7 +112,8 @@ class DashboardController extends AbstractDashboardController
 
     public function configureMenuItems(): iterable
     {
-        yield MenuItem::linkToUrl('Page Internet', 'fa fa-home', 'https://lesagitacteurs.fr')->setLinkTarget('blanc')->setPermission('ROLE_ADMIN');
+        yield MenuItem::linkToRoute('Page Internet', 'fa fa-home', 'app_home')->setLinkTarget('blanc')->setPermission('ROLE_ADMIN');
+        //yield MenuItem::linkToUrl('Page Internet', 'fa fa-home', 'https://lesagitacteurs.fr')->setLinkTarget('blanc')->setPermission('ROLE_ADMIN');
         yield MenuItem::linkToDashboard('Tableau de bord', 'fa fa-table-columns');
         yield MenuItem::linkToRoute('Médiathèque', 'fa fa-picture-o', 'media.index')->setPermission('ROLE_ADMIN');
         yield MenuItem::linkToCrud('easy.page.admin.menu.pages', 'fa fa-file-alt', Page::class)->setPermission('ROLE_ADMIN');

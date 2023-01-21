@@ -64,7 +64,6 @@ class Play
     #[ORM\OneToMany(mappedBy: 'play', targetEntity: FinBilan::class)]
     private Collection $finBilans;
 
-
     public function __construct()
     {
         $this->playActorRoles = new ArrayCollection();
@@ -72,6 +71,16 @@ class Play
         $this->finIncomes = new ArrayCollection();
         $this->finExpenses = new ArrayCollection();
         $this->finBilans = new ArrayCollection();
+    }
+
+    public function __toString()
+    {
+        return $this->name;
+    }
+
+    public function getYearAndName()
+    {
+        return $this->getYear() .' - '. $this->name;
     }
 
     public function getId(): ?int
@@ -214,16 +223,6 @@ class Play
         }
 
         return $result;
-    }
-
-    public function __toString()
-    {
-        return $this->name;
-    }
-
-    public function getYearAndName()
-    {
-        return $this->getYear() .' - '. $this->name;
     }
 
     /**
