@@ -92,12 +92,12 @@ class DashboardController extends AbstractDashboardController
     public function configureDashboard(): Dashboard
     {
         return Dashboard::new()
-            ->setTitle('<object data="/public/upload/systeme/logo-svg.svg"
+            ->setTitle('<object data="/images/default/logo.svg"
             width="200"
             height="50"
             type="image/svg+xml">
         
-        <img src="/public/upload/systeme/logo-png.png"
+        <img src="/images/default/logo.png"
             alt="logo" style="width:200px" />
         
         </object>');

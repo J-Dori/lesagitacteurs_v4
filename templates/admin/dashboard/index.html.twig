@@ -29,10 +29,12 @@
 	</style>
 {% endblock %}
 
+{% block content_header_wrapper %}{% endblock %}
+
 {% block main %}
 	{{ block('page_content') }}
 
-	<div class="container" style="margin-top: 10px;">
+	<div class="container mt-4">
 		<!-- Nav tabs -->
 		<ul class="nav nav-tabs">
 			<li class="nav-item bg-light">
