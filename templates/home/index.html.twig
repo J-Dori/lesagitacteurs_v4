@@ -1,7 +1,21 @@
 {% extends 'base.html.twig' %}
 
 {% block container %}
+    <section class="splide" aria-label="Splide Basic HTML Example">
+        <div class="splide__track">
+            <ul class="splide__list">
+                {% for play in plays %}
+                    <li class="splide__slide" data-splide-interval="1000">
+                        <img src="{{ play.image|resolve_media }}" alt="Image de {{ play.name }}" style="width:50px">
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </section>
 
+    <script>
+        
+    </script>
 {% endblock %}
 
 

@@ -33,6 +33,15 @@ class PlayRepository extends ServiceEntityRepository
         return $qb;
     }
 
+    public function getAllPublishedOrderBy(string $order = 'ASC')
+    {
+        return $this->getPublishedQuery()
+            ->orderBy('p.year', $order)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
     public function getPlayStatusUpFront()
     {
         return $this->getPublishedQuery()

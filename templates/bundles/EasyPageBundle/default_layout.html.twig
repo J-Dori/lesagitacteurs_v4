@@ -2,58 +2,102 @@
 
 <!DOCTYPE html>
 <html lang="{{ app.request.attributes.get('_locale') | default('fr') }}">
-	<head>
-		<meta charset="UTF-8"/>
-		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<title>
-			{% block title %}Les Agit'acteurs
-			{% endblock %}
-		</title>
-		{# <link rel="icon" href="logo/fav.ico"> #}
-		<link rel="preconnect" href="https://fonts.googleapis.com">
-		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w==" crossorigin="anonymous" referrerpolicy="no-referrer"/> {% block easy_page_head_metas %}{% endblock %}
-
-		{% block stylesheets %}
-		    {{ encore_entry_link_tags('app') }}
-			<link href="https://fonts.googleapis.com/css2?family=Red+Hat+Display:wght@400;600;700&display=swap" rel="stylesheet">
-			{% for asset_css in layout.assets_css %}
-				<link rel="stylesheet" href="{{ asset(asset_css) }}">
-			{% endfor %}
-			{% for asset_webpack in layout.assets_webpack %}
-				{{ encore_entry_link_tags(asset_webpack) }}
-			{% endfor %}
+<head>
+	<meta charset="UTF-8"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>
+		{% block title %}Les Agit'acteurs
 		{% endblock %}
+	</title>
+	<link rel="icon" href="{{ asset('default/logo/fav.ico') }}">
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w==" crossorigin="anonymous" referrerpolicy="no-referrer"/>
+	
+	{% block easy_page_head_metas %}{% endblock %}
 
-	</head>
-	<body>
-		{% block body %}
+	{{ encore_entry_link_tags('app') }}
+	{{ encore_entry_link_tags('navigation') }}
 
-			{% block header %}
-				{{ render(controller('App\\Controller\\NavigationController::topMenu', {})) }}
-			{% endblock %}
+	{% block stylesheets %}
+		<link href="https://fonts.googleapis.com/css2?family=Red+Hat+Display:wght@400;600;700&display=swap" rel="stylesheet">
+		{% for asset_css in layout.assets_css %}
+			<link rel="stylesheet" href="{{ asset(asset_css) }}">
+		{% endfor %}
+		{% for asset_webpack in layout.assets_webpack %}
+			{{ encore_entry_link_tags(asset_webpack) }}
+		{% endfor %}
+	{% endblock %}
 
-			<div id="mainContent">
+</head>
+<body>
+	<nav id="nav_wrapper">
+		{% block header %}
+			{{ render(controller('App\\Controller\\NavigationController::topMenu', {})) }}
+		{% endblock %}
+	</nav>
+	{% block body %}
+		<div id="body_container" class="container-fluid">
+			<header class="d-flex flex-wrap justify-content-evenly align-items-center align-content-center flex-column">
+				<div id="header__logo">
+					<a href="/" title="Page d'accueil">
+						<img src="{{ asset('images/default/logo.png') }}" alt="Logo Les Agit'acteurs" title="Page d'accueil">
+					</a>
+				</div>
+				<div id="header__title">
+					<h1>La troupe de théâtre d'enfants de Hersbach, Wisches</h1>
+				</div>
+			</header>
+			
+			<div class="wrapper">
 				{% block container %}
 					{% block easy_page_page_content %}{% endblock %}
 				{% endblock %}
 			</div>
 
 			{% block footer %}
-				{% include 'navigations/footer.html.twig' %}
+				{{ render(controller('App\\Controller\\NavigationController::footerMenu', {})) }}
 			{% endblock %}
 
-
-			{{ encore_entry_link_tags('app') }}
-			{% block javascripts %}
-				{% for asset_js in layout.assets_js %}
-					<script type="text/javascript" src="{{ asset(asset_js) }}"></script>
-				{% endfor %}
-				{% for asset_webpack in layout.assets_webpack %}
-					{{ encore_entry_script_tags(asset_webpack) }}
-				{% endfor %}
-			{% endblock %}
-
+		</div>
+		
+		{{ encore_entry_link_tags('app') }}
+		{{ encore_entry_link_tags('navigation') }}
+		{% block javascripts %}
+			{% for asset_js in layout.assets_js %}
+				<script type="text/javascript" src="{{ asset(asset_js) }}"></script>
+			{% endfor %}
+			{% for asset_webpack in layout.assets_webpack %}
+				{{ encore_entry_script_tags(asset_webpack) }}
+			{% endfor %}
 		{% endblock %}
-	</body>
+	{% endblock %}
+	
+	<script src="https://cdn.jsdelivr.net/npm/@splidejs/splide-extension-intersection@0.2.0/dist/js/splide-extension-intersection.min.js"></script>
+	
+	<script>
+		
+		// Sidebar Menu
+		const body = document.querySelector("#body_container")
+		const navWrapper = document.querySelector("#nav_wrapper")
+		const navSidebar = document.querySelector("#sidebar-wrapper #menu-toggle")
+		navSidebar.addEventListener('click', function(e) {
+			e.preventDefault();
+			navWrapper.classList.toggle("toggled");
+		});
+		body.addEventListener('click', function(){
+			if (navWrapper.classList.contains("toggled"))
+				navWrapper.classList.toggle("toggled");
+		});
+
+		// Gallery Slider Play
+		new Splide( '#splide' ).mount( window.splide.Extensions );
+        var splide = new Splide( '.splide', {
+            type    : 'loop',
+            perPage : 1,
+            autoplay: true,
+        });
+        splide.mount();
+	</script>
+</body>
 </html>

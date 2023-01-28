@@ -39,28 +39,14 @@ class ContactSocialRepository extends ServiceEntityRepository
         }
     }
 
-//    /**
-//     * @return ContactSocial[] Returns an array of ContactSocial objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('c')
-//            ->andWhere('c.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('c.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
-
-//    public function findOneBySomeField($value): ?ContactSocial
-//    {
-//        return $this->createQueryBuilder('c')
-//            ->andWhere('c.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
+    public function getSocialMediaLinks()
+    {
+        return $this->createQueryBuilder('c')
+            ->select('c.facebook, c.instagram, c.youtube')
+            ->where('c.enabled = :enabled')
+            ->setParameter('enabled', true)
+            ->setMaxResults(1)
+            ->getQuery()
+            ->getResult();
+    }
 }

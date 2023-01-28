@@ -1,33 +1,50 @@
-<footer class="bg-gray-800 py-10 pt-4 pb-2 font-serif">
-    <div class="flex flex-wrap lg:justify-around sm:justify-center lg:flex-row flex-col">
-        <div id="footer__subscribe" class="my-4 flex-1 text-center">
-            <h4 class="mb-3">NEWSLETTER</h4>
-            <form action="{{ path('app_home') }}" method="post">
-                <input type="mail" placeholder="E-mail" class="p-2 w-80 row mx-auto">
-                <button type="submit" class="btn btn-md">Souscrire</button>
-            </form>
-        </div>
-        <div id="footer__site_map_links" class="my-4 mx-0 flex-1">
-            <div class="flex flex-wrap text-center lg:items-start items-center justify-center lg:flex-row flex-col-reverse">
-                <div class="flex-1 mr-2">
-                    {# {{ easy_menu('footer-links-col-1', { 'template': 'components/menus/links_uppercase_block.html.twig' }) }} #}
-                </div>
-                <div class="flex-1">
-                    {# {{ easy_menu('footer-links-col-2', { 'template': 'components/menus/links_uppercase_block.html.twig' }) }} #}
+<footer>
+    <div id="footer__wrapper">
+        {% if mainPages is defined and mainPages %}
+            <div id="footer__site_map" class="my-4">
+                <div>
+                    {% for page in mainPages %}
+                        {% if page.slug != 'home' %}
+                            <li class="footer__site_map"><a href="{{ page.slug }}">{{ page.name }}</a></li>
+                        {% endif %}
+                    {% endfor %}
                 </div>
             </div>
+        {% endif %}
+
+        <div id="footer__contact" class="my-4">
+            <h5 class="footer__title">CONTACT</h5>
+            <p><a href="mailto:info@lesagitacteurs.fr">info@lesagitacteurs.fr</a></p>
         </div>
-        <div id="footer__social" class="my-4 flex-1 text-center text-white">
-            <h4>TROUVEZ NOUS SUR</h4>
-            <div class="col">
-                {# {{ easy_menu('footer-links-media', { 'template': 'components/menus/links_inline_icon_only.html.twig' }) }} #}
+
+        {% if socialMedia is defined and socialMedia %}
+            <div id="footer__social" class="my-4">
+                <h5 class="footer__title">TROUVEZ NOUS SUR</h5>
+                <div class="col d-flex flex-wrap justify-content-center">
+                    {% for key, value in socialMedia[0] %}
+                        {% if value is not empty %}
+                            <div>
+                                <a href="{{ value }}">
+                                    <i class="fa-brands fa-{{ key }}"></i>
+                                </a>
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                </div>
             </div>
-            <h5 class="mt-6">CONTACT</h5>
-            <p><a class="text-white-50" href="mailto:info@lesagitacteurs.fr">info@lesagitacteurs.fr</a></p>
-        </div>
+            {% endif %}
     </div>
-    <div class="flex flex-wrap justify-center text-sm">
-        <small class="mx-4"><a class="text-gray-600 hover:text-white" href="{{ path('app_policy') }}">POLITIQUE DE CONFIDENTIALITÉ</a></small>
-        <small class="mx-4"><a class="text-gray-600 hover:text-white" href="{{ path('app_home') }}">COOKIES</a></small>
+
+    <div id="footer__policy" class="d-flex flex-wrap justify-content-between">
+        <div>
+            <small>
+                <a href="{{ path('app_policy') }}">POLITIQUE DE CONFIDENTIALITÉ</a>
+                <span>&emsp;|&emsp;</span>
+                <a href="{{ path('app_home') }}">COOKIES</a>
+            </small>
+        </div>
+        <div>
+            <small>© 2008-{{ 'now'|date('Y') }} Copyright - Les Agit'acteurs</small>
+        </div>
     </div>
 </footer>

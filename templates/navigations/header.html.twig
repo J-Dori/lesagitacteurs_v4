@@ -1,28 +1,12 @@
-<nav class="navbar navbar-expand-md sticky-top">
-    <div class="container-fluid">
-        <a class="navbar-brand" href="/">
-            <object data="/public/upload/systeme/logo-svg.svg"
-                width="200"
-                height="50"
-                type="image/svg+xml">
-            
-            <img src="/public/upload/systeme/logo-png.png"
-                alt="logo" style="width:200px" />
-            
-            </object>
-        </a>
-        <button class="navbar-toggler ms-auto" type="button" data-bs-toggle="collapse" data-bs-target="#n_bar" aria-controls="navbarNavAltMarkup" aria-label="Toggle navigation">
-            <i class="fa-solid fa-bars text-secondary"></i>
-        </button>
-        <div class="collapse navbar-collapse text-center" id="n_bar">
-            <ul class="navbar-nav">
-                {{ dump(mainPages) }}
-                {% for page in mainPages %}
-                    {% if page.slug != 'home' %}
-                        <li class="nav-item"><a class="nav-link" href="{{ page.slug }}">{{ page.name }}</a></li>
-                    {% endif %}
-                {% endfor %}
-            </ul>
-        </div>
-    </div>
-</nav>
+<div id="sidebar-wrapper">
+    <ul class="sidebar-nav" style="margin-left:0;">
+        <li class="sidebar-brand">
+            <a href="#menu-toggle"  id="menu-toggle" style="margin-top:20px;float:right;" title="Menu"> <i class="fa fa-bars " style="font-size:20px !Important;" aria-hidden="true" aria-hidden="true"></i> 
+        </li>
+        {% for page in mainPages %}
+            {% if page.slug != 'home' %}
+                <li class="sidebar-item"><a class="sidebar-link" href="{{ page.slug }}">{{ page.name }}</a></li>
+            {% endif %}
+        {% endfor %}
+    </ul>
+</div>

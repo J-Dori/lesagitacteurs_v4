@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\EasyPage\Page;
+use App\Entity\Site\ContactSocial;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -36,9 +37,19 @@ class NavigationController extends AbstractController
     
     public function footerMenu(): Response
     {
-        $params = ['slugs' => ''];
-
-        return $this->redirect($this->generateUrl('easy_page_index', $params));
+        $pages = $this->manager->getRepository(Page::class)->getMainPages();
+        $socialMedia = $this->manager->getRepository(ContactSocial::class)->getSocialMediaLinks();
+        $mainPages = [];
+        foreach ($pages as $page) {
+            $mainPages[] = [
+                'name' => $page->getName(),
+                'slug' => $page->getSlug(),
+            ];
+        }
+        return $this->render('navigations/footer.html.twig', [
+            'mainPages' => $mainPages,
+            'socialMedia' => $socialMedia,
+        ]);
     }
 
 
