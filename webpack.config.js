@@ -21,9 +21,10 @@ Encore
      * and one CSS file (e.g. app.css) if your JavaScript imports CSS.
      */
     .addEntry('app', './assets/app.js')
+    .addEntry('navigation', './assets/styles/navigation/navigation.js')
     
     // enables the Symfony UX Stimulus bridge (used in assets/bootstrap.js)
-    .enableStimulusBridge('./assets/controllers.json')
+    //.enableStimulusBridge('./assets/controllers.json')
 
     // When enabled, Webpack "splits" your files into smaller pieces for greater optimization.
     .splitEntryChunks()
@@ -56,8 +57,17 @@ Encore
         config.corejs = '3.23';
     })
 
+    //Assets images
+    // Install file-loader to use copyFiles()
+    // .copyFiles({
+    //     from: './assets/images',
+    //     to: 'images/[path][name].[ext]',
+    // })
+
     // enables Sass/SCSS support
-    //.enableSassLoader()
+    .enableSassLoader()
+
+    //.enablePostCssLoader()
 
     // uncomment if you use TypeScript
     //.enableTypeScriptLoader()
@@ -71,7 +81,6 @@ Encore
 
     // uncomment if you're having problems with a jQuery plugin
     //.autoProvidejQuery()
-    .enablePostCssLoader()
 ;
 
 module.exports = Encore.getWebpackConfig();
