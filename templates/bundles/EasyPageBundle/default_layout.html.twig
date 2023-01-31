@@ -6,21 +6,18 @@
 	<meta charset="UTF-8"/>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>
-		{% block title %}Les Agit'acteurs
-		{% endblock %}
+		{% block title %}Les Agit'acteurs{% endblock %}
 	</title>
 	<link rel="icon" href="{{ asset('default/logo/fav.ico') }}">
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w==" crossorigin="anonymous" referrerpolicy="no-referrer"/>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css"/>
 	
 	{% block easy_page_head_metas %}{% endblock %}
 
 	{{ encore_entry_link_tags('app') }}
-	{{ encore_entry_link_tags('navigation') }}
-
 	{% block stylesheets %}
-		<link href="https://fonts.googleapis.com/css2?family=Red+Hat+Display:wght@400;600;700&display=swap" rel="stylesheet">
 		{% for asset_css in layout.assets_css %}
 			<link rel="stylesheet" href="{{ asset(asset_css) }}">
 		{% endfor %}
@@ -29,10 +26,13 @@
 		{% endfor %}
 	{% endblock %}
 
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.3/jquery.min.js" integrity="sha512-STof4xm1wgkfm7heWqFJVn58Hm3EtS31XFaagaa8VMReCXAkQnJZ+jEy8PCC/iT18dFy95WcExNHFTqLyp72eQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+	{% block jquery %}{% endblock %}
+	<link rel="manifest" href="{{ asset('build/manifest.json') }}">
 </head>
 <body>
 	<nav id="nav_wrapper">
-		{% block header %}
+		{% block navigation %}
 			{{ render(controller('App\\Controller\\NavigationController::topMenu', {})) }}
 		{% endblock %}
 	</nav>
@@ -61,8 +61,7 @@
 
 		</div>
 		
-		{{ encore_entry_link_tags('app') }}
-		{{ encore_entry_link_tags('navigation') }}
+		{{ encore_entry_script_tags('app') }}
 		{% block javascripts %}
 			{% for asset_js in layout.assets_js %}
 				<script type="text/javascript" src="{{ asset(asset_js) }}"></script>
@@ -70,34 +69,8 @@
 			{% for asset_webpack in layout.assets_webpack %}
 				{{ encore_entry_script_tags(asset_webpack) }}
 			{% endfor %}
-		{% endblock %}
+		{% endblock %} 
 	{% endblock %}
-	
-	<script src="https://cdn.jsdelivr.net/npm/@splidejs/splide-extension-intersection@0.2.0/dist/js/splide-extension-intersection.min.js"></script>
-	
-	<script>
-		
-		// Sidebar Menu
-		const body = document.querySelector("#body_container")
-		const navWrapper = document.querySelector("#nav_wrapper")
-		const navSidebar = document.querySelector("#sidebar-wrapper #menu-toggle")
-		navSidebar.addEventListener('click', function(e) {
-			e.preventDefault();
-			navWrapper.classList.toggle("toggled");
-		});
-		body.addEventListener('click', function(){
-			if (navWrapper.classList.contains("toggled"))
-				navWrapper.classList.toggle("toggled");
-		});
 
-		// Gallery Slider Play
-		new Splide( '#splide' ).mount( window.splide.Extensions );
-        var splide = new Splide( '.splide', {
-            type    : 'loop',
-            perPage : 1,
-            autoplay: true,
-        });
-        splide.mount();
-	</script>
 </body>
 </html>

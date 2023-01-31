@@ -58,11 +58,11 @@ class DashboardController extends AbstractDashboardController
     public function index(): Response
     {
         $play = $this->playRepository->getPlayStatusUpFront();
-        $playUpFront = true;
+        $playBanner = true;
         
         if (empty($play)) {
             $play = $this->playRepository->getLastPlay()[0];
-            $playUpFront = false;
+            $playBanner = false;
         }
 
         // Admin User Dashboard page
@@ -70,7 +70,7 @@ class DashboardController extends AbstractDashboardController
             $gallery = $this->playGalleryRepository->getGalleryByPositionOrder($play, 'ASC');
             return $this->render('admin/dashboard/index.html.twig', [
                 'play' => $play,
-                'playUpFront' => $playUpFront,
+                'playBanner' => $playBanner,
                 'gallery' => $gallery,
                 'bilan' => $this->bilan,
                 'balance' => $this->finBankRepository->getCurrentBalance(),
@@ -92,15 +92,8 @@ class DashboardController extends AbstractDashboardController
     public function configureDashboard(): Dashboard
     {
         return Dashboard::new()
-            ->setTitle('<object data="/images/default/logo.svg"
-            width="200"
-            height="50"
-            type="image/svg+xml">
-        
-        <img src="/images/default/logo.png"
-            alt="logo" style="width:200px" />
-        
-        </object>');
+            ->setTitle('<img src="/images/default/logo.png"
+            alt="Les Agit\'acteurs" style="width:200px" />');
     }
 
     public function configureCrud(): Crud

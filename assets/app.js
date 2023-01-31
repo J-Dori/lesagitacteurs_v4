@@ -1,11 +1,20 @@
-/*
- * Welcome to your app's main JavaScript file!
- *
- * We recommend including the built version of this JavaScript file
- * (and its CSS file) in your base layout (base.html.twig).
- */
+import '/assets/styles/main/main.scss';
+import '/assets/styles/main/navigation/sidebar_menu.scss';
+import '/assets/styles/main/_play_banner.scss';
+import '/assets/styles/main/navigation/footer.scss';
 
-// any CSS you import will output into a single css file (app.css in this case)
-import './styles/app.css';
-//import './styles/sidebar_menu.scss';
+// NAVIGATION
+// Sidebar Menu
+const body = document.querySelector("#body_container")
+const navWrapper = document.querySelector("#nav_wrapper")
+const navSidebar = document.querySelector("#sidebar-wrapper #menu-toggle")
+navSidebar.addEventListener('click', function(e) {
+    e.preventDefault();
+    navWrapper.classList.toggle("toggled");
+});
+body.addEventListener('click', function(){
+    if (navWrapper.classList.contains("toggled"))
+        navWrapper.classList.toggle("toggled");
+});
 
+// Footer

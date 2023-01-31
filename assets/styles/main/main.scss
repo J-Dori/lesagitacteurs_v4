@@ -1,0 +1,155 @@
+@import './assets/styles/vars/fonts';
+@import './assets/styles/vars/colors';
+
+body {
+    background-color: var(--white) !important;
+}
+
+a {
+    color: inherit;
+    text-decoration: none !important;
+}
+
+header,
+.wrapper {
+    margin-left: 40px;
+}
+
+header {
+    margin-bottom: 15px;
+    padding: 5px;
+    text-align: center;
+    height: 300px;
+    background-image: url('/public/images/default/background_theater_room.jpg');
+    background-repeat: no-repeat;
+    background-position: center 45%;
+    background-size: cover;
+    opacity: 0.85;
+}
+
+#header__logo img {
+    max-width: 450px;
+    height: auto
+}
+
+#header__title h1 {
+    text-align: center;
+    font-weight: 600;
+    color: var(--white) !important;
+    text-shadow: 2px 2px 1px #000000, 0px 0px 25px #d2ba00;
+    font-family: 'Righteous';
+    padding: 0 20px 10px;
+}
+
+#body_container {
+    margin: 0 !important;
+    padding: 0 !important;
+
+}
+
+#play_carousel {
+    max-width: 520px !important;
+    height: auto;
+
+    .carousel-item {
+        text-align: center !important;
+
+        &-link {
+            position: relative;
+            display: inline-block;
+        }
+
+        &-image {
+            max-width: 300px !important;
+        }
+
+        &-span {
+            position: absolute;
+            width: 100%;
+            margin: 0;
+            padding: 15px;
+            bottom: 0;
+            left: 0;
+            background-color: var(--black);
+            color: var(--white);
+            font-family: 'Righteous';
+
+            &-year {
+                font-size: 1.2em;
+            }
+
+            &-title {
+                font-size: 1em;
+            }
+        }
+    }
+
+    .carousel-control-prev-icon {
+        background-image: url('/public/images/default/arrow-left-white.png');
+    }
+
+    .carousel-control-next-icon {
+        background-image: url('/public/images/default/arrow-right-white.png');
+    }
+}
+
+#medhi {
+    &_text {
+        //font-size: 24px;
+        //padding: 15px;
+    }
+    &_image {
+        width: 450px;
+        height: auto;
+    }
+}
+
+
+
+@media screen and (max-width: 768px) {
+    #header__title h1 {
+        font-size: 28px !important;
+    }
+
+    header {
+        height: 250px;
+    }
+    #medhi {
+        &_image {
+            width: 300px;
+            margin-bottom: 30px;
+        }
+    }
+}
+
+@media screen and (max-width: 600px) {
+    #header__logo img {
+        width: 280px !important;
+    }
+
+    #play_carousel {
+        width: 330px;
+
+        .carousel-item {
+            &-image {
+                width: 230px !important;
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 440px) {
+    #header__title h1 {
+        font-size: 28px !important;
+    }
+
+    #header__logo img {
+        width: 240px !important;
+    }
+    #medhi {
+        &_image {
+            width: 250px;
+        }
+    }
+
+}

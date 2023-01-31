@@ -2,9 +2,10 @@
 
 namespace App\Repository;
 
+use Doctrine\ORM\QueryBuilder;
 use App\Entity\Site\ContactSocial;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 
 /**
  * @extends ServiceEntityRepository<ContactSocial>
@@ -39,14 +40,36 @@ class ContactSocialRepository extends ServiceEntityRepository
         }
     }
 
-    public function getSocialMediaLinks()
+    public function getPublishedQuery(): QueryBuilder
     {
-        return $this->createQueryBuilder('c')
-            ->select('c.facebook, c.instagram, c.youtube')
+        $qb = $this->createQueryBuilder('c')
             ->where('c.enabled = :enabled')
             ->setParameter('enabled', true)
+        ;
+        return $qb;
+    }
+
+    public function getEnabledContact()
+    {
+        return $this->getPublishedQuery()
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
+
+    public function getSocialMediaLinks()
+    {
+        return $this->getPublishedQuery()
+            ->select('c.facebook, c.instagram, c.youtube')
             ->setMaxResults(1)
             ->getQuery()
             ->getResult();
+    }
+    public function setAllDisabled(): void
+    {
+        $this->createQueryBuilder('c')
+            ->update()
+            ->set('c.enabled', 'false')
+            ->getQuery()
+            ->execute();
     }
 }

@@ -38,7 +38,6 @@ class NavigationController extends AbstractController
     public function footerMenu(): Response
     {
         $pages = $this->manager->getRepository(Page::class)->getMainPages();
-        $socialMedia = $this->manager->getRepository(ContactSocial::class)->getSocialMediaLinks();
         $mainPages = [];
         foreach ($pages as $page) {
             $mainPages[] = [
@@ -48,7 +47,8 @@ class NavigationController extends AbstractController
         }
         return $this->render('navigations/footer.html.twig', [
             'mainPages' => $mainPages,
-            'socialMedia' => $socialMedia,
+            'socialMedia' => $this->manager->getRepository(ContactSocial::class)->getSocialMediaLinks(),
+            'contactSocial' => $this->manager->getRepository(ContactSocial::class)->getEnabledContact(),
         ]);
     }
 

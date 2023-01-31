@@ -1,50 +1,66 @@
 <footer>
-    <div id="footer__wrapper">
+    <div id="footer__wrapper" class="d-flex justify-content-center align-items-md-start align-items-center flex-md-row flex-column">
         {% if mainPages is defined and mainPages %}
-            <div id="footer__site_map" class="my-4">
+            <div id="footer__site_map" class="col-md-3 col-12 my-4 p-3">
                 <div>
                     {% for page in mainPages %}
                         {% if page.slug != 'home' %}
-                            <li class="footer__site_map"><a href="{{ page.slug }}">{{ page.name }}</a></li>
+                            <li class="footer__site_map my-2"><a href="{{ page.slug }}">{{ page.name }}</a></li>
                         {% endif %}
                     {% endfor %}
                 </div>
             </div>
         {% endif %}
 
-        <div id="footer__contact" class="my-4">
-            <h5 class="footer__title">CONTACT</h5>
-            <p><a href="mailto:info@lesagitacteurs.fr">info@lesagitacteurs.fr</a></p>
+        <div class="footer__partners text-center d-flex flex-wrap flex-column align-items-center col-md-6 col-12 my-4 p-3">
+            <h5 class="footer__title">PARTENARIAT</h5>
+            <p class="mb-4">Nous sommes reconnaissants, de l'aide apportée à notre association, à la région Grand-Est et à la Commune de Wisches</p>
+            <p>
+                <img src="{{ asset('images/default/grandest.png') }}" alt="Partenaires" height="60px">&emsp;
+                <img src="{{ asset('images/default/wisches.png') }}" alt="Partenaires" height="60px">
+            </p>
         </div>
 
-        {% if socialMedia is defined and socialMedia %}
-            <div id="footer__social" class="my-4">
-                <h5 class="footer__title">TROUVEZ NOUS SUR</h5>
-                <div class="col d-flex flex-wrap justify-content-center">
-                    {% for key, value in socialMedia[0] %}
-                        {% if value is not empty %}
-                            <div>
-                                <a href="{{ value }}">
-                                    <i class="fa-brands fa-{{ key }}"></i>
-                                </a>
-                            </div>
-                        {% endif %}
-                    {% endfor %}
+        <div class="footer__contact_group d-flex flex-wrap flex-column align-items-center col-md-3 col-12 my-4 p-3">
+            {% if contactSocial is defined and contactSocial %}
+                <div id="footer__contact" class="mb-3 text-center">
+                    <h5 class="footer__title">CONTACTEZ NOUS</h5>
+                    <p>
+                        <a href="callto:{{ contactSocial.mobilePhone }}"><i class="fa-solid fa-phone"></i>&emsp;{{ contactSocial.mobilePhone }}</a>
+                    </p>
+                    <p>
+                        <a href="mailto:{{ contactSocial.email }}"><i class="fa-solid fa-envelope"></i>&emsp;{{ contactSocial.email }}</a>
+                    </p>
                 </div>
-            </div>
             {% endif %}
+
+            {% if socialMedia is defined and socialMedia %}
+                <div id="footer__social">
+                    <h5 class="footer__title mb-2">TROUVEZ NOUS SUR</h5>
+                    <div class="col d-flex flex-wrap justify-content-center">
+                        {% for key, value in socialMedia[0] %}
+                            {% if value is not empty %}
+                                <div>
+                                    <a class="mx-3" href="{{ value }}">
+                                        <i class="fa-brands fa-{{ key }} fa-2x"></i>
+                                    </a>
+                                </div>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
+            {% endif %}
+        </div>
     </div>
 
     <div id="footer__policy" class="d-flex flex-wrap justify-content-between">
         <div>
             <small>
-                <a href="{{ path('app_policy') }}">POLITIQUE DE CONFIDENTIALITÉ</a>
-                <span>&emsp;|&emsp;</span>
-                <a href="{{ path('app_home') }}">COOKIES</a>
+                <a href="{{ path('app_policy') }}">POLITIQUE DE CONFIDENTIALITÉ&emsp;|&emsp;COOKIES</a>
             </small>
         </div>
         <div>
-            <small>© 2008-{{ 'now'|date('Y') }} Copyright - Les Agit'acteurs</small>
+            <small>&copy; 2008-{{ 'now'|date('Y') }} Copyright - Les Agit'acteurs</small>
         </div>
     </div>
 </footer>

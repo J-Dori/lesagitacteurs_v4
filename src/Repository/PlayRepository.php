@@ -8,6 +8,7 @@ use App\Trait\ObjectStateEnum;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Common\Collections\Criteria;
 
 /**
  * @extends ServiceEntityRepository<Play>
@@ -37,6 +38,17 @@ class PlayRepository extends ServiceEntityRepository
     {
         return $this->getPublishedQuery()
             ->orderBy('p.year', $order)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
+    public function getAllStatusClosed()
+    {
+        return $this->getPublishedQuery()
+            ->andWhere('p.playStatus = :closed')
+            ->setParameter('closed', PlayStatusEnum::CLOSED)
+            ->orderBy('p.year', Criteria::ASC)
             ->getQuery()
             ->getResult()
         ;

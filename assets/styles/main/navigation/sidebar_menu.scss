@@ -19,7 +19,7 @@
     height: 100%;
     margin-left: -250px;
     overflow-y: auto;
-    background-color: #202020 !important;
+    background-color: var(--black) !important;
    
     -webkit-transition: all 0.5s ease;
     -moz-transition: all 0.5s ease;
@@ -48,7 +48,7 @@
             color: #999999;
         }
         a:hover {
-            color: #fff;
+            color: var(--white);
             background: none;
         }
     }
@@ -65,7 +65,7 @@
     }
     a:hover {
         text-decoration: none;
-        color: #fff;
+        color: var(--white);
     }
     .sidebar-item a:active,
     .sidebar-item a:focus {

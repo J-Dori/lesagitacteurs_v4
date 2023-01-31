@@ -1,0 +1,85 @@
+{% set _start = playBanner.dateStart is defined and playBanner.dateStart is not empty ? playBanner.dateStart|date('U') : '' %}
+{% set _end = playBanner.dateEnd is defined and playBanner.dateEnd is not empty ? playBanner.dateEnd|date_modify("+1 day")|date('U') : '' %}
+{% set _today = "now"|date('U') %}
+{% set _status = '' %}
+{% if _start is not empty and _end is not empty %}
+    {% if _start <= _today and _end >= _today  %}
+        {% set _status = 'En scène' %}
+    {% elseif _start > _today %}
+        {% set _status = 'À venir' %}
+    {% elseif _end < _today %}
+        {% set _status = 'Derniére pièce' %}
+    {% endif %}
+{% endif %}
+
+<section id="play_banner" class="bg--white d-flex justify-content-center align-items-md-start align-items-center flex-md-row flex-column">
+    <div class="col-md-6 col-12 text-center text--black px-md-5 px-1">
+        <div class="has-animation animation-ltr" data-delay="10">
+            <p id="play_banner__state" class="">{{ _status }}</p>
+        </div>
+
+        {% if _status == 'En scène' %}
+            <div id="play_banner__header" class="has-animation animation-rtl" data-delay="1000">
+                <p id="play_banner__title">
+                    {{ playBanner.name }}
+                </p>
+                <p id="play_banner__date">du {{ _start|date("d/m/Y") }}
+                    <span id="linebreak">au {{ _end|date("d/m/Y") }}</span>
+                </p>
+            </div>
+        {% endif %}
+
+        <div class="has-animation animation-ltr text" data-delay="1500">
+            {{ playBanner.description|raw }}
+        </div>
+
+        <br><br>
+
+        <div class="has-animation animation-rtl" data-delay="2000">
+            <p>@TODO - En Scène - NOTES .......</p>
+        </div>
+    </div>
+    <br>
+    <div id="play_banner__image" class="col-md-6 col-12 has-animation animation-ltr" data-delay="4000">
+        <img class="shadow" src="{{ playBanner.image|resolve_media }}" alt="Image de {{ playBanner.name }}">
+    </div>
+
+</section>
+
+{# ContactSocial displayed if Play is upFront / En scène #}
+{% if contactSocial is defined and contactSocial is not empty and _status == 'En scène' %}
+    <div id="contact" class="px-md-5 px-2 mb-3">
+        <hr>
+        <div class="d-flex justify-content-center align-items-md-start align-items-center flex-md-row flex-column mt-3">
+            <div id="contact_address" class="col-md-6 col-12 d-flex flex-wrap flex-column align-items-center text-center mb-md-0 mb-5">
+                <h3>Joignez nous dans notre salle de spectacle</h3>
+                <p class="m-0 text-bold">{{ contactSocial.name }}</p>
+                <p class="m-0">{{ contactSocial.address }}</p>
+                <p class="m-0">{{ contactSocial.zipCode }} {{ contactSocial.city }}</p>
+                {% if contactSocial.mapLink is not empty %}
+                    <a class="text-secondary" href="https://goo.gl/maps/nH3QJkzTyCVv3AEE9" target="_blank" alt="Lien Google Maps" title="Lien Google Maps">
+                        <p class="mb-1">
+                            Cliquez ici pour ouvrir Google Maps
+                        </p>
+                        <i class="fa-solid fa-map-location-dot fa-2x "></i>
+                    </a>
+                {% endif %}
+            </div>
+
+            <div id="contact_booking" class="col-md-6 col-12 d-flex flex-wrap flex-column align-items-center text-center">
+                <h3>Réservez votre place</h3>
+                <p>Envoyez un SMS ou E-mail mentionnant :
+                    <br>
+                    La date, votre Nom et le nombres de personnes
+                </p>
+                <p>
+                    <a class="text-secondary" href="callto:{{ contactSocial.mobilePhone }}"><i class="fa-solid fa-phone"></i>&emsp;{{ contactSocial.mobilePhone }}</a>
+                </p>
+                <p>
+                    <a class="text-secondary" href="mailto:{{ contactSocial.email }}"><i class="fa-solid fa-envelope"></i>&emsp;{{ contactSocial.email }}</a>
+                </p>
+            </div>
+        </div>
+    </div>
+{% endif %}
+

@@ -3,8 +3,9 @@
 namespace App\Repository;
 
 use App\Entity\Site\Contact;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 
 /**
  * @extends ServiceEntityRepository<Contact>
@@ -39,6 +40,22 @@ class ContactRepository extends ServiceEntityRepository
         }
     }
 
+    public function getPublishedQuery(): QueryBuilder
+    {
+        $qb = $this->createQueryBuilder('c')
+            ->where('c.enabled = :enabled')
+            ->setParameter('enabled', true)
+        ;
+        return $qb;
+    }
+
+    public function getEnabledContact()
+    {
+        return $this->getPublishedQuery()
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
+
     public function setAllDisabled(): void
     {
         $this->createQueryBuilder('c')
@@ -48,28 +65,4 @@ class ContactRepository extends ServiceEntityRepository
             ->execute();
     }
 
-//    /**
-//     * @return Contact[] Returns an array of Contact objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('c')
-//            ->andWhere('c.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('c.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
-
-//    public function findOneBySomeField($value): ?Contact
-//    {
-//        return $this->createQueryBuilder('c')
-//            ->andWhere('c.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
 }

@@ -1,0 +1,189 @@
+@import './assets/styles/vars/fonts';
+@import './assets/styles/vars/colors';
+
+$color-main: #ffc849;
+$color-secondary: #d91f7c;
+
+#play_banner {
+    text-align: center;
+
+    div {
+        display: inline-block;
+    }
+
+    &__state {
+        margin: 0 0 20px 0;
+        font-size: 48px;
+        font-weight: 800;
+        font-family: var(--text-title);
+        text-transform: uppercase;
+        display: inline-block;
+        position: relative;
+    }
+
+    &__header {
+        font-weight: 800;
+    }
+
+    &__title {
+        font-size: 40px;
+    }
+
+    &__date,
+    &__title span {
+        font-size: 28px;
+    }
+
+    &__image>img {
+        width: 350px;
+        height: auto;
+    }
+
+    // play's Description
+    .text>div {
+        line-height: 24px;
+        padding: 20px;
+        max-width: 650px;
+        display: inline-block;
+    }
+
+    // ANIMATION
+    .has-animation {
+        position: relative;
+
+        p,
+        img,
+        &.text>div {
+            opacity: 0;
+        }
+
+        &.animate-in {
+
+            p,
+            img,
+            &.text>div {
+                animation: textHidden 1s 2.8s forwards;
+            }
+
+            &:before,
+            &:after {
+                content: '';
+                position: absolute;
+                top: 0;
+                right: 0;
+                height: 100%;
+                z-index: 10;
+            }
+
+            &:before {
+                background-color: $color-main;
+            }
+
+            &:after {
+                background-color: $color-secondary;
+                animation-delay: .5s;
+            }
+        }
+
+        &.animation-ltr.animate-in {
+            &:before {
+                animation: revealLTR 1.8s ease;
+            }
+
+            &:after {
+                animation: revealLTR 1s .6s ease;
+            }
+        }
+
+        &.animation-rtl.animate-in {
+            &:before {
+                animation: revealRTL 1.8s ease;
+            }
+
+            &:after {
+                animation: revealRTL 1s .6s ease;
+            }
+        }
+    }
+
+    @keyframes revealRTL {
+        0% {
+            width: 0;
+            right: 0;
+        }
+
+        65% {
+            width: 100%;
+            right: 0;
+        }
+
+        100% {
+            width: 0;
+            right: 100%;
+        }
+    }
+
+    @keyframes revealLTR {
+        0% {
+            width: 0;
+            left: 0;
+        }
+
+        65% {
+            width: 100%;
+            left: 0;
+        }
+
+        100% {
+            width: 0;
+            left: 100%;
+        }
+    }
+
+    @keyframes textHidden {
+        0% {
+            opacity: 0;
+        }
+
+        100% {
+            opacity: 1;
+        }
+    }
+
+    // play Status = En scène
+    .has-animation.text-rainbow-animation p {
+        opacity: 1;
+        background-image: 
+            linear-gradient(to right, #ff3c9e,#ffc635,#139bef, #ff3c9e); 
+        -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        animation: rainbow-animation 35s linear infinite;
+    }
+      
+    @keyframes rainbow-animation {
+        to {
+            background-position: 100vh;
+        }
+    }
+}
+
+@media screen and (max-width: 768px) {
+    #play_banner {
+        &__title {
+            font-size: 32px;
+        }
+        .text>div {
+            padding: 0;
+        }
+        &__date {
+            font-size: 24px;
+            #linebreak {
+                display: block;
+                line-height: 2rem;
+            }
+        }
+        &__image > img {
+            width: 280px;
+        }
+    } 
+}

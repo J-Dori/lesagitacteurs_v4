@@ -43,7 +43,7 @@ class ContactSocialCrudController extends AbstractCrudController
         $actions->remove(Crud::PAGE_INDEX, Action::NEW);
         $actions->remove(Crud::PAGE_INDEX, Action::DELETE);
         $actions->remove(Crud::PAGE_EDIT, Action::SAVE_AND_CONTINUE);
-        $actions->add(Crud::PAGE_EDIT, Action::DELETE);
+        //$actions->remove(Crud::PAGE_EDIT, Action::DELETE);
         return $actions;
     }
     
@@ -59,7 +59,8 @@ class ContactSocialCrudController extends AbstractCrudController
             TextField::new('mobilePhone', 'site.contact.field.phone')->setColumns('col-md-2 col-sm-4')->setHelp('Ex : + 33 6 xx xx xx xx'),
             TextField::new('email', 'site.contact.field.email')->setColumns('col-md-4 col-sm-8'),
             FormField::addRow(),
-            TextField::new('mapLink', 'site.social.field.mapLink')->setHelp('Lien pour afficher l\'image de Google Maps')->hideOnIndex(),
+            TextField::new('mapLink', 'site.social.field.mapLink')->hideOnIndex()
+                ->setHelp('Dans Google Maps, cliquez sur "partager" <i class="fa-solid fa-share-nodes"></i> et puis copiez le lien qui s\'affiche'),
 
             FormField::addTab('Réseaux Sociaux'),
             TextField::new('facebook', 'site.social.field.facebook')->hideOnIndex(),
@@ -71,20 +72,20 @@ class ContactSocialCrudController extends AbstractCrudController
 
     public function persistEntity(EntityManagerInterface $entityManager, $entityInstance): void
     {
-        if ($entityInstance->isEnabled() === true) {
-            $this->repo->setAllDisabled();
-        }
-
+        // if ($entityInstance->isEnabled() === true) {
+        //     $this->repo->setAllDisabled();
+        // }
+        $entityInstance->setEnabled(true);
         $entityManager->persist($entityInstance);
         $entityManager->flush();
     }
 
     public function updateEntity(EntityManagerInterface $entityManager, $entityInstance): void
     {
-        if ($entityInstance->isEnabled() === true) {
-            $this->repo->setAllDisabled();
-        }
-
+        // if ($entityInstance->isEnabled() === true) {
+        //     $this->repo->setAllDisabled();
+        // }
+        $entityInstance->setEnabled(true);
         $entityManager->persist($entityInstance);
         $entityManager->flush();
     }

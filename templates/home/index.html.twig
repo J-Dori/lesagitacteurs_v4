@@ -1,21 +1,81 @@
 {% extends 'base.html.twig' %}
 
 {% block container %}
-    <section class="splide" aria-label="Splide Basic HTML Example">
-        <div class="splide__track">
-            <ul class="splide__list">
-                {% for play in plays %}
-                    <li class="splide__slide" data-splide-interval="1000">
-                        <img src="{{ play.image|resolve_media }}" alt="Image de {{ play.name }}" style="width:50px">
-                    </li>
-                {% endfor %}
-            </ul>
-        </div>
-    </section>
+	{% if playBanner is defined and playBanner is not empty %}
+		{% include "home/_play_banner.html.twig" %}
+	{% endif %}
 
-    <script>
-        
-    </script>
+	{% if plays is defined and plays is not empty %}
+		<section class="bg--black d-flex justify-content-md-around justify-content-center align-items-center flex-md-row flex-column flex-column-reverse">
+			<div id="play_carousel" class="carousel slide w-100" data-bs-ride="carousel">
+				<div class="carousel-inner">
+					{% for play in plays %}
+						{% set active = loop.first ? 'active' : '' %}
+						{% set interval = loop.last ? '7000' : '3500' %}
+
+						<div class="carousel-item {{ active }}" data-bs-interval="{{ interval }}">
+							<a class="carousel-item-link" href="/nos-pieces">
+								<img class="carousel-item-image" src="{{ play.image|resolve_media }}" alt="Image de {{ play.name }}">
+								<span class="carousel-item-span">
+									<span class="carousel-item-span-year">{{ play.year }}</span>
+									<br>
+									<span class="carousel-item-span-title">{{ play.name }}</span>
+								</span>
+							</a>
+						</div>
+					{% endfor %}
+				</div>
+
+				<button class="carousel-control-prev" type="button" data-bs-target="#play_carousel" data-bs-slide="prev">
+					<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+					<span class="visually-hidden">Previous</span>
+				</button>
+				<button class="carousel-control-next" type="button" data-bs-target="#play_carousel" data-bs-slide="next">
+					<span class="carousel-control-next-icon" aria-hidden="true"></span>
+					<span class="visually-hidden">Next</span>
+				</button>
+			</div>
+
+			<div id="play_carousel__title" class="flex-shrink-1 text-center text--white px-md-5 px-2 mb-5">
+				<h2 class="inline-block">
+					Nous vous présentons toutes les pièces que les enfants ont jouées tout au long de ces années
+					<br>
+					<br>
+					Le rôle qu'ils ont joué, une galerie de photos et des vidéos
+				</h2>
+			</div>
+		</section>
+	{% endif %}
+
+	<section id="medhi" class="bg--white d-flex flex-wrap justify-content-center align-items-center flex-md-row flex-column-reverse">
+		<div class="col-md-6 col-12">
+			<h4 id="medhi_text">Notre troupe a l’honneur d’avoir pour parrain, depuis 2014, l’acteur et comédien, <strong>Mehdi El Glaoui</strong>.
+			<br>
+			<br>
+			Connu pour ses interprétations dans les séries télévisées, <strong>Belle et Sébastien</strong> et les <strong>Aventures de Poly</strong>, produites par sa mère Cécile Aubry.</h4>
+		</div>
+		<div class="col-md-6 col-12">
+			<img id="medhi_image" class="p-1 shadow" src="{{ asset('images/default/medhi.jpeg') }}" alt="Photo de Medhi">
+		</div>
+	</section>
+
 {% endblock %}
 
-
+{% block jquery %}
+	{# template : _play_banner #}
+	<script>
+		$(document).ready(function () {
+			$('.has-animation').each(function (index) {
+				$(this).delay($(this).data('delay')).queue(function () {
+					$(this).addClass('animate-in');
+				});
+			});
+		});
+		$(window).on('load', function() {
+			if ($('#play_banner__state').text() == 'En scène' ) {
+				$('#play_banner__state').parent().removeClass('animate-in')
+				$('#play_banner__state').parent().addClass('text-rainbow-animation')
+			}
+		});
+	</script>
+{% endblock %}
